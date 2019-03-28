@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <!-- <button @click="displayInit();"></button> -->
     <ul
       class="card_holder card"
       id="1"
@@ -7,7 +8,7 @@
       <li
         v-for="card in decks[0]"
         class="card card_stack"
-        :key="card.rank+card.deck+card.suit"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -26,7 +27,7 @@
       <li
         v-for="card in decks[1]"
         class="card card_stack"
-        :key="card.rank"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -44,7 +45,7 @@
       <li
         v-for="card in decks[2]"
         class="card card_stack"
-        :key="card.rank"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -62,7 +63,7 @@
       <li
         v-for="card in decks[3]"
         class="card card_stack"
-        :key="card.rank"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -80,7 +81,7 @@
       <li
         v-for="card in decks[4]"
         class="card card_stack"
-        :key="card.rank"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -98,7 +99,7 @@
       <li
         v-for="card in decks[5]"
         class="card card_stack"
-        :key="card.rank"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -116,7 +117,7 @@
       <li
         v-for="card in decks[6]"
         class="card card_stack"
-        :key="card.rank"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -134,7 +135,7 @@
       <li
         v-for="card in decks[7]"
         class="card card_stack"
-        :key="card.rank"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -152,7 +153,7 @@
       <li
         v-for="card in decks[8]"
         class="card card_stack"
-        :key="card.rank"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -170,7 +171,7 @@
       <li
         v-for="card in decks[9]"
         class="card card_stack"
-        :key="card.rank"
+        :key="card.rank+card.deck+card.suit+card.deck"
         :class="card.isDown?'down':card.suit"
       >
         <div class="rank">{{card.rank}}</div>
@@ -181,18 +182,16 @@
         >
       </li>
     </ul>
-    <ul
+    <div
       class="card_holder_extra card down"
       id="12"
+      @click="addCards()"
     >
-    </ul>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
   name: "main",
   data: function() {
@@ -233,6 +232,19 @@ export default {
       this.decks.forEach(deck => {
         deck[deck.length - 1].isDown = false;
       });
+    },
+    addCards: function() {
+      this.decks.forEach(deck => {
+        if (this.decks[10].length > 0) {
+          var newCard = this.decks[10].pop();
+          console.log(newCard);
+
+          newCard.isDown = false;
+          deck.push(newCard);
+          console.log(deck.length);
+        }
+      });
+      this.$forceUpdate();
     }
   },
   created() {
