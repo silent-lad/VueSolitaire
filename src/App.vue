@@ -4,10 +4,20 @@
       class="card_holder card"
       id="1"
     >
-      <li class="card down card_stack "></li>
-      <li class="card down card_stack "></li>
-      <li class="card card_stack heart">K ♥</li>
-      <li class="card card_stack heart">K ♥</li>
+      <li
+        v-for="card in deck_one"
+        class="card card_stack"
+        :key="card.value"
+        :class="card.isDown?'down':card.suite"
+      >
+        <div class="value">{{card.value}}</div>
+        <img
+          class="value"
+          :src="getImgUrl(card.suite)"
+          width="15px"
+        >
+      </li>
+
     </ul>
     <ul
       class="card_holder card"
@@ -64,28 +74,21 @@ export default {
   name: "main",
   data: function() {
     return {
-      numbers: [1, 2, 3, 4, 5]
+      numbers: [1, 2, 3, 4, 5],
+      deck_one: [
+        { value: "K", isDown: true, suite: "heart" },
+        { value: "K", isDown: true, suite: "heart" },
+        { value: "K", isDown: false, suite: "spades" },
+        { value: "K", isDown: false, suite: "heart" }
+      ]
     };
   },
   components: {
     HelloWorld
   },
   methods: {
-    shuffle: function() {
-      var list = [];
-      var suits = ["clubs", "diamonds", "hearts", "spades"];
-      var card = "";
-      while (true) {
-        var value = Math.floor(Math.random() * 12 + 1);
-        var suit = suits[`${Math.floor(Math.random() * 3 + 1)}`];
-        if (list.indexOf(`${value}${suit}`) == -1) {
-          list.push(`${value}${suit}`);
-        }
-        if (list.length == 52) {
-          break;
-        }
-      }
-      console.log(list);
+    getImgUrl: function(suite) {
+      return require("./assets/suites/" + suite + ".png");
     }
   }
 };
@@ -103,6 +106,10 @@ li {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 80%;
+  text-decoration: transparent;
+}
+.card.down > .value {
+  visibility: hidden;
 }
 .card_stack.down {
   margin-bottom: -130%;
@@ -147,7 +154,31 @@ body {
   background: rgba(0, 0, 0, 0.3);
 }
 .heart {
-  background: url("./assets/App.png") rgb(255, 255, 255);
+  background: url("./assets/suites/heart.png") rgb(255, 255, 255);
+  font-size: 20px;
+  color: red;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+}
+.spades {
+  background: url("./assets/suites/spades.png") rgb(255, 255, 255);
+  font-size: 20px;
+  color: black;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+}
+.clubs {
+  background: url("./assets/suites/clubs.png") rgb(255, 255, 255);
+  font-size: 20px;
+  color: black;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+}
+.diamond {
+  background: url("./assets/suites/diamond.png") rgb(255, 255, 255);
   font-size: 20px;
   color: red;
   background-repeat: no-repeat;
