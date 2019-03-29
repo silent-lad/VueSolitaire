@@ -7,6 +7,9 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "lodash.chunk": "^4.2.0",
+    "lodash.shuffle": "^4.2.0",
+    "lodash.uniq": "^4.5.0",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1"
   },
