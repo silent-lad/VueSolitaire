@@ -2,23 +2,30 @@
   <div class="main">
     <!-- <button @click="displayInit();"></button> -->
     <ul
-      v-for="deck in decks.slice(0,10)"
-      :key="deck[deck.length-1].rank+ deck[deck.length-1].suit+deck[deck.length-1].deck"
+      v-for="deck in proccessedDecks"
+      :key="deck[0][0].rank+deck[0][0].deck+deck[0][0].suit"
       class="card_holder card"
       id="1"
     >
       <transition-group :name="list">
         <li
-          v-for="card in deck"
-          class="card card_stack"
-          :key="card.rank+card.deck+card.suit+card.deck"
-          :class="card.isDown?'down':card.suit"
-          @click="selectCard(card)"
+          v-for="hand in deck"
+          :key="hand[0].rank+hand[0].deck+hand[0].suit"
         >
-          <div class="rank">{{card.rank}}</div>
-          <div class="rank">{{symbols[`${card.suit}`]}}</div>
-          <div class="rank bottom">{{symbols[`${card.suit}`]}}</div>
-          <div class="rank bottom">{{card.rank}}</div>
+          <ul>
+            <li
+              v-for="card in hand"
+              :key="card.rank+card.deck+card.suit"
+              class="card card_stack"
+              :class="card.isDown?'down':card.suit"
+              @click="selectCard(card)"
+            >
+              <div class="rank">{{card.rank}}</div>
+              <div class="rank">{{symbols[`${card.suit}`]}}</div>
+              <div class="rank bottom">{{symbols[`${card.suit}`]}}</div>
+              <div class="rank bottom">{{card.rank}}</div>
+            </li>
+          </ul>
 
         </li>
       </transition-group>
@@ -115,24 +122,35 @@ export default {
         // console.log(shownDeck);
 
         var processed = shownDeck.map(deck => {
-          var currentSuit = deck[0].suit;
-          var currentRank = this.processRank(deck[0].rank);
-          var hand = [deck[0]];
+          var currentSuit = "";
+          var currentRank = "";
+          var hand = [];
           var finalArr = [];
-          for (var i = 1; i < deck.length; i++) {
-            if (
-              deck[i].suit == currentSuit &&
-              this.processRank(deck[i].rank) - currentRank == -1
-            ) {
-              currentRank = this.processRank(deck[i].rank);
-              hand.push(deck[i]);
+          for (var i = 0; i < deck.length; i++) {
+            if (deck[i].isDown == false) {
+              if (
+                deck[i].suit == currentSuit &&
+                this.processRank(deck[i].rank) - currentRank == -1
+              ) {
+                currentRank = this.processRank(deck[i].rank);
+                hand.push(deck[i]);
+              } else {
+                if (i == 0 || currentSuit == "") {
+                  hand = [deck[i]];
+                } else {
+                  finalArr.push(hand);
+                  hand = [deck[i]];
+                }
+                currentSuit = deck[i].suit;
+                currentRank = this.processRank(deck[i].rank);
+              }
             } else {
-              finalArr.push(hand);
-              hand = [deck[i]];
-              currentSuit = deck[i].suit;
-              currentRank = this.processRank(deck[i].rank);
+              // hand = ;
+              finalArr.push([deck[i]]);
             }
           }
+          // pushing the last hand
+          finalArr.push(hand);
           return finalArr;
         });
         return processed;
@@ -146,10 +164,14 @@ export default {
 </script>
 <style >
 li {
+  list-style: none;
   font-size: 25px;
 }
 .card.first {
   margin: 0% -3% !important;
+}
+ul {
+  padding: 0;
 }
 .card.down {
   background: url("./assets/sl.png") rgb(182, 28, 28);
