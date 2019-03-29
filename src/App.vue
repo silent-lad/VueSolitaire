@@ -234,7 +234,7 @@ ul {
   padding: 0;
 }
 .hand:hover .card {
-  box-shadow: 0px -1px 10px rgba(234, 238, 11, 1);
+  box-shadow: 4px 4px 10px rgb(34, 11, 238);
 }
 .card_deck {
   border: 2px solid black;
