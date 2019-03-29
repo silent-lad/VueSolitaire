@@ -1,36 +1,43 @@
 <template>
   <div class="main">
     <!-- <button @click="displayInit();"></button> -->
-    <ul
+    <div
       v-for="deck in proccessedDecks"
       :key="deck[0][0].rank+deck[0][0].deck+deck[0][0].suit"
       class="card_holder card"
       id="1"
     >
-      <transition-group :name="list">
-        <li
+      <transition-group
+        name="list"
+        tag="div"
+      >
+        <div
+          class="hand"
           v-for="hand in deck"
           :key="hand[0].rank+hand[0].deck+hand[0].suit"
         >
-          <ul>
-            <li
+          <div>
+
+            <div
               v-for="card in hand"
               :key="card.rank+card.deck+card.suit"
               class="card card_stack"
               :class="card.isDown?'down':card.suit"
               @click="selectCard(card)"
+              style="cursor:pointer;"
             >
               <div class="rank">{{card.rank}}</div>
               <div class="rank">{{symbols[`${card.suit}`]}}</div>
               <div class="rank bottom">{{symbols[`${card.suit}`]}}</div>
               <div class="rank bottom">{{card.rank}}</div>
-            </li>
-          </ul>
+            </div>
 
-        </li>
+          </div>
+
+        </div>
       </transition-group>
 
-    </ul>
+    </div>
     <div
       class="card_holder_extra card down"
       id="12"
@@ -64,13 +71,29 @@ export default {
     },
     displayInit: function() {
       var initDeck = [];
+      // this.ranks.forEach(rank => {
+      //   this.suits.forEach(suit => {
+      //     initDeck.push(
+      //       { rank, isDown: true, suit, deck: 1 },
+      //       { rank, isDown: true, suit, deck: 2 }
+      //     );
+      //   });
+      // });
+
       this.ranks.forEach(rank => {
-        this.suits.forEach(suit => {
-          initDeck.push(
-            { rank, isDown: true, suit, deck: 1 },
-            { rank, isDown: true, suit, deck: 2 }
-          );
-        });
+        // this.suits.forEach(suit => {
+        var suit = "spades";
+        initDeck.push(
+          { rank, isDown: true, suit, deck: 1 },
+          { rank, isDown: true, suit, deck: 2 },
+          { rank, isDown: true, suit, deck: 3 },
+          { rank, isDown: true, suit, deck: 4 },
+          { rank, isDown: true, suit, deck: 5 },
+          { rank, isDown: true, suit, deck: 6 },
+          { rank, isDown: true, suit, deck: 7 },
+          { rank, isDown: true, suit, deck: 8 }
+        );
+        // });
       });
       var shuffledDeck = shuffle(initDeck);
       this.decks = chunk(shuffledDeck.slice(0, 50), 5);
@@ -199,15 +222,19 @@ ul {
   margin-bottom: -125px;
 }
 .card_stack {
+  position: relative;
   margin-bottom: -100px;
 }
 .card {
   box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.5);
   width: 7vw;
   height: 140px;
-  border-radius: 2px;
+  border-radius: 4px;
   border: 1px solid black;
   padding: 0;
+}
+.hand:hover .card {
+  box-shadow: 0px -1px 10px rgba(234, 238, 11, 1);
 }
 .card_deck {
   border: 2px solid black;
@@ -220,6 +247,9 @@ ul {
   padding: 0;
   height: 140px;
   background: rgb(124, 7, 7);
+}
+html {
+  background: green;
 }
 body {
   margin: 0px !important;
@@ -272,8 +302,8 @@ body {
 }
 .card_holder_extra {
   position: absolute;
-  top: 65vh;
-  left: 90vw;
+  top: 75vh;
+  left: 89.4vw;
 }
 .list-item {
   display: inline-block;
