@@ -2,7 +2,7 @@
   <div class="main">
     <!-- <button @click="displayInit();"></button> -->
     <div
-      v-for="deck in proccessedDecks"
+      v-for="(deck,index) in proccessedDecks"
       :key="deck[0][0].rank+deck[0][0].deck+deck[0][0].suit"
       class="card_holder card"
       id="1"
@@ -16,22 +16,24 @@
           v-for="hand in deck"
           :key="hand[0].rank+hand[0].deck+hand[0].suit"
         >
-          <div>
 
-            <div
-              v-for="card in hand"
-              :key="card.rank+card.deck+card.suit"
-              class="card card_stack"
-              :class="card.isDown?'down':card.suit"
-              @click="selectCard(card)"
-              style="cursor:pointer;"
-            >
-              <div class="rank">{{card.rank}}</div>
-              <div class="rank">{{symbols[`${card.suit}`]}}</div>
-              <div class="rank bottom">{{symbols[`${card.suit}`]}}</div>
-              <div class="rank bottom">{{card.rank}}</div>
-            </div>
+          <div
+            v-for="card in hand"
+            :key="card.rank+card.deck+card.suit"
+            class="card card_stack"
+            :class="card.isDown?'down':card.suit"
+            @click="selectCard(card)"
+            style="cursor:pointer;"
+            draggable="true"
+            v-on:dragstart="drag(card,$event,index)"
+            v-on:dragend="dragend(card,$event)"
+            v-on:dragenter="dragenter(card, $event)"
+          >
 
+            <div class="rank">{{card.rank}}</div>
+            <div class="rank">{{symbols[`${card.suit}`]}}</div>
+            <div class="rank bottom">{{symbols[`${card.suit}`]}}</div>
+            <div class="rank bottom">{{card.rank}}</div>
           </div>
 
         </div>
@@ -69,32 +71,51 @@ export default {
     getImgUrl: function(suit) {
       return require("./assets/suits/" + suit + ".png");
     },
+    drag: function(card, ev, pile) {
+      console.log(card, ev, pile);
+      console.log(card.rank);
+
+      ev.dataTransfer.setData("text/plain", card.rank);
+    },
+    dragend: function(e, event) {
+      // e.target.style.opacity = 1;
+      // console.log(event);
+    },
+    dragenter: function(card, e) {
+      // console.log(e);
+      // if (card.isDown == false) {
+      //   console.log(
+      //     `%c${card.rank} ${card.suit}`,
+      //     "background: #222; color: #bada55;font-size:25px;"
+      //   );
+      // }
+    },
     displayInit: function() {
       var initDeck = [];
-      // this.ranks.forEach(rank => {
-      //   this.suits.forEach(suit => {
-      //     initDeck.push(
-      //       { rank, isDown: true, suit, deck: 1 },
-      //       { rank, isDown: true, suit, deck: 2 }
-      //     );
-      //   });
-      // });
-
       this.ranks.forEach(rank => {
-        // this.suits.forEach(suit => {
-        var suit = "spades";
-        initDeck.push(
-          { rank, isDown: true, suit, deck: 1 },
-          { rank, isDown: true, suit, deck: 2 },
-          { rank, isDown: true, suit, deck: 3 },
-          { rank, isDown: true, suit, deck: 4 },
-          { rank, isDown: true, suit, deck: 5 },
-          { rank, isDown: true, suit, deck: 6 },
-          { rank, isDown: true, suit, deck: 7 },
-          { rank, isDown: true, suit, deck: 8 }
-        );
-        // });
+        this.suits.forEach(suit => {
+          initDeck.push(
+            { rank, isDown: true, suit, deck: 1 },
+            { rank, isDown: true, suit, deck: 2 }
+          );
+        });
       });
+
+      // this.ranks.forEach(rank => {
+      //   // this.suits.forEach(suit => {
+      //   var suit = "spades";
+      //   initDeck.push(
+      //     { rank, isDown: true, suit, deck: 1 },
+      //     { rank, isDown: true, suit, deck: 2 },
+      //     { rank, isDown: true, suit, deck: 3 },
+      //     { rank, isDown: true, suit, deck: 4 },
+      //     { rank, isDown: true, suit, deck: 5 },
+      //     { rank, isDown: true, suit, deck: 6 },
+      //     { rank, isDown: true, suit, deck: 7 },
+      //     { rank, isDown: true, suit, deck: 8 }
+      //   );
+      //   // });
+      // });
       var shuffledDeck = shuffle(initDeck);
       this.decks = chunk(shuffledDeck.slice(0, 50), 5);
       this.decks[10] = shuffledDeck.slice(50);
@@ -140,7 +161,7 @@ export default {
   },
   computed: {
     proccessedDecks: function() {
-      var shownDeck = this.decks.slice(0, 9);
+      var shownDeck = this.decks.slice(0, 10);
       try {
         // console.log(shownDeck);
 
@@ -197,7 +218,7 @@ ul {
   padding: 0;
 }
 .card.down {
-  background: url("./assets/sl.png") rgb(182, 28, 28);
+  background: url("./assets/sl.png") rgb(255, 255, 255);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 80%;
@@ -234,7 +255,7 @@ ul {
   padding: 0;
 }
 .hand:hover .card {
-  box-shadow: 4px 4px 10px rgb(34, 11, 238);
+  box-shadow: 4px 4px 10px rgb(247, 210, 0);
 }
 .card_deck {
   border: 2px solid black;
