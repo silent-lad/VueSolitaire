@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="green_table">
     <!-- <button @click="displayInit();"></button> -->
     <div
       v-for="(deck,index) in proccessedDecks"
@@ -7,123 +7,51 @@
       class="card_holder card"
       id="1"
     >
-      <transition-group
-        name="list"
-        tag="div"
-      >
-        <div
-          class="hand"
-          v-for="hand in deck"
-          :key="hand[0].rank+hand[0].deck+hand[0].suit"
-        >
-
-          <div
+      <transition-group name="list" tag="div">
+        <div class="hand" v-for="hand in deck" :key="hand[0].rank+hand[0].deck+hand[0].suit">
+          <Card
             v-for="card in hand"
             :key="card.rank+card.deck+card.suit"
-            class="card card_stack"
-            :class="card.isDown?'down':card.suit"
-            @click="selectCard(card)"
-            style="cursor:pointer;"
-            draggable="true"
-            v-on:dragstart="drag(card,$event,index)"
-            v-on:dragend="dragend(card,$event)"
-            v-on:dragenter="dragenter(card, $event)"
-          >
-
-            <div class="rank">{{card.rank}}</div>
-            <div class="rank">{{symbols[`${card.suit}`]}}</div>
-            <div class="rank bottom">{{symbols[`${card.suit}`]}}</div>
-            <div class="rank bottom">{{card.rank}}</div>
-          </div>
-
+            :card="card"
+            @click.native="selectCard(card,hand)"
+          ></Card>
         </div>
       </transition-group>
-
     </div>
-    <div
-      class="card_holder_extra card down"
-      id="12"
-      @click="addCards()"
-    >
-    </div>
+    <div @click="dealCards()" class="pile card down"></div>
   </div>
 </template>
 
 <script>
-import shuffle from "lodash.shuffle";
-import uniq from "lodash.uniq";
-import chunk from "lodash.chunk";
-import { totalmem } from "os";
-import { log } from "util";
+import Card from "./components/Card.vue";
+import { ranks, suits, symbols } from "./assets/gameInfo.json";
+import {
+  spiderInit,
+  processRank,
+  checkPile,
+  checkMoveSpider
+} from "./assets/spiderSolitaire.js";
+import { normalInit } from "./assets/normalSolitaire.js";
+
 export default {
   name: "main",
-  selectedCard: {},
+  components: { Card },
   data: function() {
     return {
-      ranks: ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"],
-      suits: ["heart", "diamond", "spades", "clubs"],
+      ranks,
+      suits,
+      symbols,
       decks: [],
       cards: [],
-      symbols: { heart: "♥", clubs: "♣", spades: "♠", diamond: "♦" }
+      selectedCard: ""
     };
   },
   methods: {
-    getImgUrl: function(suit) {
-      return require("./assets/suits/" + suit + ".png");
-    },
-    drag: function(card, ev, pile) {
-      console.log(card, ev, pile);
-      console.log(card.rank);
-
-      ev.dataTransfer.setData("text/plain", card.rank);
-    },
-    dragend: function(e, event) {
-      // e.target.style.opacity = 1;
-      // console.log(event);
-    },
-    dragenter: function(card, e) {
-      // console.log(e);
-      // if (card.isDown == false) {
-      //   console.log(
-      //     `%c${card.rank} ${card.suit}`,
-      //     "background: #222; color: #bada55;font-size:25px;"
-      //   );
-      // }
-    },
-    displayInit: function() {
-      var initDeck = [];
-      this.ranks.forEach(rank => {
-        this.suits.forEach(suit => {
-          initDeck.push(
-            { rank, isDown: true, suit, deck: 1 },
-            { rank, isDown: true, suit, deck: 2 }
-          );
-        });
-      });
-
-      // this.ranks.forEach(rank => {
-      //   // this.suits.forEach(suit => {
-      //   var suit = "spades";
-      //   initDeck.push(
-      //     { rank, isDown: true, suit, deck: 1 },
-      //     { rank, isDown: true, suit, deck: 2 },
-      //     { rank, isDown: true, suit, deck: 3 },
-      //     { rank, isDown: true, suit, deck: 4 },
-      //     { rank, isDown: true, suit, deck: 5 },
-      //     { rank, isDown: true, suit, deck: 6 },
-      //     { rank, isDown: true, suit, deck: 7 },
-      //     { rank, isDown: true, suit, deck: 8 }
-      //   );
-      //   // });
-      // });
-      var shuffledDeck = shuffle(initDeck);
-      this.decks = chunk(shuffledDeck.slice(0, 50), 5);
-      this.decks[10] = shuffledDeck.slice(50);
-      this.decks.forEach((deck, index) => {
-        if (index != 10) deck[deck.length - 1].isDown = false;
-      });
-    },
-    addCards: function() {
+    normalInit,
+    spiderInit,
+    processRank,
+    checkMoveSpider,
+    dealCards: function() {
       this.decks.forEach(deck => {
         if (this.decks[10].length > 0) {
           var newCard = this.decks[10].pop();
@@ -133,38 +61,30 @@ export default {
       });
       this.$forceUpdate();
     },
-    selectCard: function(cardSelected) {
-      console.log("selected");
-
-      cardSelected.selected = true;
-      this.selectedCard = cardSelected;
-    },
-    processRank: function(rank) {
-      if (rank == "K" || rank == "Q" || rank == "J" || rank == "A") {
-        switch (rank) {
-          case "K":
-            return 13;
-          case "Q":
-            return 12;
-          case "J":
-            return 11;
-          case "A":
-            return 1;
-        }
+    selectCard: function(cardSelected, hand) {
+      if (this.selectedCard == "") {
+        this.selectedCard = cardSelected;
       } else {
-        return parseInt(rank);
+        if (checkMoveSpider(cardSelected, this.selectedCard)) {
+          console.log("yess");
+          console.log("hi", hand);
+        } else {
+          console.log("nooooo");
+          this.selectedCard = "";
+        }
       }
     }
   },
   created() {
-    this.displayInit();
+    // this.spiderInit.bind(this);
+    // this.spiderInit();
+    this.normalInit.bind(this);
+    this.normalInit();
   },
   computed: {
     proccessedDecks: function() {
       var shownDeck = this.decks.slice(0, 10);
       try {
-        // console.log(shownDeck);
-
         var processed = shownDeck.map(deck => {
           var currentSuit = "";
           var currentRank = "";
@@ -207,38 +127,6 @@ export default {
 };
 </script>
 <style >
-li {
-  list-style: none;
-  font-size: 25px;
-}
-.card.first {
-  margin: 0% -3% !important;
-}
-ul {
-  padding: 0;
-}
-.card.down {
-  background: url("./assets/sl.png") rgb(255, 255, 255);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 80%;
-  text-decoration: transparent;
-}
-.card.down > .rank {
-  visibility: hidden;
-}
-.rank {
-  margin-left: 2px;
-}
-.rank.bottom {
-  /* position: absolute; */
-  position: relative;
-  top: 43px;
-  text-align: left;
-  /* transform: translate(50%, 50%); */
-  transform: rotate(180deg);
-  padding-left: 5px;
-}
 .card_stack.down {
   margin-bottom: -125px;
 }
@@ -275,7 +163,7 @@ html {
 body {
   margin: 0px !important;
 }
-.main {
+.green_table {
   display: flex;
   border: none;
   justify-content: space-evenly;
@@ -289,39 +177,7 @@ body {
   list-style: none;
   background: rgba(0, 0, 0, 0.3);
 }
-.heart {
-  background: url("./assets/suits/heart.png") rgb(255, 255, 255);
-  font-size: 20px;
-  color: red;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 50%;
-}
-.spades {
-  background: url("./assets/suits/spades.png") rgb(255, 255, 255);
-  font-size: 20px;
-  color: black;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 50%;
-}
-.clubs {
-  background: url("./assets/suits/clubs.png") rgb(255, 255, 255);
-  font-size: 20px;
-  color: black;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 50%;
-}
-.diamond {
-  background: url("./assets/suits/diamond.png") rgb(255, 255, 255);
-  font-size: 20px;
-  color: red;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 50%;
-}
-.card_holder_extra {
+.pile {
   position: absolute;
   top: 75vh;
   left: 89.4vw;
