@@ -1,4 +1,8 @@
 <template>
+<div>
+  <div class="mobile_warn card-5">
+  <h1 style="padding:10px;">Please keep your phone in <span style="color:orange;">Landscape</span> mode to play the game</h1>
+  </div>
   <div class="green_table">
     <!-- <button @click="displayInit();"></button> -->
     <div
@@ -18,6 +22,7 @@
       </transition-group>
     </div>
     <div @click="dealCards()" class="pile card down"></div>
+  </div>
   </div>
 </template>
 
@@ -151,6 +156,9 @@ export default {
 };
 </script>
 <style >
+.mobile_warn {
+  display:none;
+}
 .card_stack.down {
   margin-bottom: -125px;
 }
@@ -187,10 +195,11 @@ export default {
   height: 140px;
   background: rgb(124, 7, 7);
 }
-html {
+/* html {
   background: green;
-}
+} */
 body {
+
   margin: 0px !important;
 }
 .green_table {
@@ -230,30 +239,68 @@ body {
   opacity: 0;
   transform: translateY(30px);
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 780px) {
+  
+  body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   .card {
-    height: 40px;
+    height: 60px;
   }
   .card_stack.down {
-    margin-bottom: -30px;
+    margin-bottom: -55px;
   }
   .card_stack {
-    margin-bottom: -20px;
+    margin-bottom: -45px;
   }
   .rank {
-    font-size: 7px;
+    font-size: 9px;
     margin-left: 1px;
   }
   .rank.bottom {
     /* position: absolute; */
     position: relative;
-    top: 8px;
+    top: 17px;
     left: 3px;
     text-align: left;
     /* transform: translate(50%, 50%); */
     transform: rotate(180deg);
     /* padding-left: 5px; */
   }
+  .card_stack.selected {
+  box-shadow: 5px 5px 10px blue;
+  border: 3px solid blue;
+  transform: translate(2px, 2px);
+  }
 }
+@media screen and (orientation:portrait) {
+   .mobile_warn {
+
+   background: #D66666;
+  border-radius: 10px;
+  display: inline-block;
+  color: #A32A2C;
+  font-family: 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size:12px;
+  /* height: 100px; */
+  margin: 1rem;
+  position: relative;
+  width: 90%;
+
+  }
+  .card-5 {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+  .green_table{
+    display:none;
+  }   
+}
+/* @media screen and (orientation:landscape) { … } */
 </style>
 
