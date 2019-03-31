@@ -100,7 +100,7 @@ export default {
       });
       this.$forceUpdate();
     },
-    selectCard: function(cardSelected, deck) {
+    selectCard: function(cardSelected, deck,holder) {
       this.playSound();
       if (this.selectedCard == "") {
         if (cardSelected.isDown) {
@@ -211,7 +211,11 @@ export default {
   background: green;
 } */
 body {
-
+ background-image: radial-gradient(
+    rgba(57, 172, 57, 0.726),
+    rgb(0, 116, 0),
+    darkgreen
+  );
   margin: 0px !important;
 }
 .green_table {
