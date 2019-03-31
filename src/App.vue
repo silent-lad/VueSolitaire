@@ -2,20 +2,19 @@
   <div class="green_table">
     <!-- <button @click="displayInit();"></button> -->
     <div
-      v-for="(deck,index) in proccessedDecks"
-      :key="deck[0][0].rank+deck[0][0].deck+deck[0][0].suit"
+      v-for="deck in decks.slice(0,10)"
+      :key="deck[0].rank+deck[0].deck+deck[0].suit"
       class="card_holder card"
       id="1"
     >
       <transition-group name="list" tag="div">
-        <div class="hand" v-for="hand in deck" :key="hand[0].rank+hand[0].deck+hand[0].suit">
-          <Card
-            v-for="card in hand"
-            :key="card.rank+card.deck+card.suit"
-            :card="card"
-            @click.native="selectCard(card,hand)"
-          ></Card>
-        </div>
+        <Card
+          v-for="card in deck"
+          :key="card.rank+card.deck+card.suit"
+          :card="card"
+          :isSelected="card.isSelected"
+          @click.native="selectCard(card,deck)"
+        ></Card>
       </transition-group>
     </div>
     <div @click="dealCards()" class="pile card down"></div>
@@ -29,12 +28,13 @@ import {
   spiderInit,
   processRank,
   checkPile,
-  checkMoveSpider
+  checkMoveSpider,
+  isMovable
 } from "./assets/spiderSolitaire.js";
 import { normalInit } from "./assets/normalSolitaire.js";
 
 export default {
-  name: "main",
+  name: "mainTable",
   components: { Card },
   data: function() {
     return {
@@ -43,7 +43,9 @@ export default {
       symbols,
       decks: [],
       cards: [],
-      selectedCard: ""
+      selectedCard: "",
+      selectedDeck: "",
+      selectedArray: []
     };
   },
   methods: {
@@ -51,6 +53,22 @@ export default {
     spiderInit,
     processRank,
     checkMoveSpider,
+    isMovable,
+    removeSelection: function() {
+      console.log("hig");
+      if (this.selectedCard != "") {
+        this.selectedArray.forEach(element => {
+          element.isSelected = false;
+        });
+        this.selectedArray = [];
+        this.selectedCard.isSelected = false;
+        this.selectedCard = "";
+        this.selectedDeck = "";
+        this.$forceUpdate();
+      } else {
+        return;
+      }
+    },
     dealCards: function() {
       this.decks.forEach(deck => {
         if (this.decks[10].length > 0) {
@@ -61,69 +79,67 @@ export default {
       });
       this.$forceUpdate();
     },
-    selectCard: function(cardSelected, hand) {
+    selectCard: function(cardSelected, deck) {
       if (this.selectedCard == "") {
+        if (cardSelected.isDown) {
+          return;
+        }
         this.selectedCard = cardSelected;
+        this.selectedDeck = deck;
+        this.selectedCard.isSelected = true;
+        if (isMovable(this.selectedCard, this.selectedDeck)) {
+          this.selectedArray = this.selectedDeck.slice(
+            this.selectedDeck.indexOf(this.selectedCard)
+          );
+          this.selectedArray.forEach(element => {
+            element.isSelected = true;
+          });
+        }
+
+        this.$forceUpdate();
       } else {
-        if (checkMoveSpider(cardSelected, this.selectedCard)) {
-          console.log("yess");
-          console.log("hi", hand);
+        if (checkMoveSpider(cardSelected, deck, this.selectedCard)) {
+          if (isMovable(this.selectedCard, this.selectedDeck)) {
+            var movedCards = this.selectedDeck.splice(
+              this.selectedDeck.indexOf(this.selectedCard)
+            );
+
+            movedCards.forEach(newCard => {
+              deck.push(newCard);
+            });
+            if (
+              this.selectedDeck[this.selectedDeck.length - 1].isDown == true
+            ) {
+              this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
+            }
+            console.log("dd");
+
+            this.removeSelection();
+            // this.$forceUpdate();
+
+            // deck.push(movedCards);
+            console.log("hi", deck);
+          } else {
+            console.log("dd");
+            this.removeSelection();
+            console.log("fuck off");
+            // this.$forceUpdate();
+          }
         } else {
+          console.log("dd");
           console.log("nooooo");
-          this.selectedCard = "";
+          this.removeSelection();
         }
       }
     }
   },
   created() {
-    // this.spiderInit.bind(this);
-    // this.spiderInit();
-    this.normalInit.bind(this);
-    this.normalInit();
+    this.spiderInit.bind(this);
+    this.spiderInit();
+    // this.normalInit.bind(this);
+    // this.normsalInit();
   },
-  computed: {
-    proccessedDecks: function() {
-      var shownDeck = this.decks.slice(0, 10);
-      try {
-        var processed = shownDeck.map(deck => {
-          var currentSuit = "";
-          var currentRank = "";
-          var hand = [];
-          var finalArr = [];
-          for (var i = 0; i < deck.length; i++) {
-            if (deck[i].isDown == false) {
-              if (
-                deck[i].suit == currentSuit &&
-                this.processRank(deck[i].rank) - currentRank == -1
-              ) {
-                currentRank = this.processRank(deck[i].rank);
-                hand.push(deck[i]);
-              } else {
-                if (i == 0 || currentSuit == "") {
-                  hand = [deck[i]];
-                } else {
-                  finalArr.push(hand);
-                  hand = [deck[i]];
-                }
-                currentSuit = deck[i].suit;
-                currentRank = this.processRank(deck[i].rank);
-              }
-            } else {
-              // hand = ;
-              finalArr.push([deck[i]]);
-            }
-          }
-          // pushing the last hand
-          finalArr.push(hand);
-          return finalArr;
-        });
-        return processed;
-      } catch (e) {
-        console.log(e);
-        return e.message;
-      }
-    }
-  }
+  computed: {}
 };
 </script>
 <style >
@@ -131,6 +147,7 @@ export default {
   margin-bottom: -125px;
 }
 .card_stack {
+  transition: all 0.2s linear;
   position: relative;
   margin-bottom: -100px;
 }
@@ -142,8 +159,13 @@ export default {
   border: 1px solid black;
   padding: 0;
 }
-.hand:hover .card {
+.card_stack:hover {
   box-shadow: 4px 4px 10px rgb(247, 210, 0);
+}
+.card_stack.selected {
+  box-shadow: 5px 5px 10px blue;
+  border: 3px solid blue;
+  transform: translate(10px, 10px);
 }
 .card_deck {
   border: 2px solid black;

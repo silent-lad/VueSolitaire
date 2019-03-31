@@ -1,7 +1,7 @@
 <template>
   <div
     class="card card_stack"
-    :class="card.isDown?'down':card.suit"
+    :class="[card.isDown?'down':card.suit,isSelected?'selected':'not_selected']"
     style="cursor:pointer;"
     draggable="true"
   >
@@ -20,7 +20,8 @@ export default {
     };
   },
   props: {
-    card: Object
+    card: Object,
+    isSelected: Boolean
   },
   created() {
     // console.log(this.card);
@@ -106,8 +107,3 @@ ul {
   background-size: 50%;
 }
 </style>
-
-// v-on:dragstart="drag(card,$event,index)"
-//     v-on:dragend="dragend(card,$event)"
-//     v-on:dragenter="dragenter(card, $event)"
-//         @click="selectCard(card)"

@@ -43,7 +43,7 @@ export const spiderInit = function() {
   });
 };
 
-export const checkMoveSpider = function(dropTarget, selectedCard) {
+export const checkMoveSpider = function(dropTarget, deck, selectedCard) {
   if (
     dropTarget.suit == selectedCard.suit &&
     processRank(dropTarget.rank) - processRank(selectedCard.rank) == 1
@@ -52,6 +52,20 @@ export const checkMoveSpider = function(dropTarget, selectedCard) {
   } else {
     return false;
   }
+};
+
+export const isMovable = function(card, deck) {
+  var movingCards = deck.slice(deck.indexOf(card));
+  var ranks = movingCards.map(currCard => processRank(currCard.rank));
+  var currRank = processRank(card.rank);
+  for (var index = 1; index < ranks.length; index++) {
+    // if (currRank - ranks[index] != 1) {
+    //   console.log(currRank - ranks[index], currRank, ranks[index], ranks);
+    //   return false;
+    // }
+    currRank = ranks[index];
+  }
+  return true;
 };
 
 export const checkPile = function(pile) {
