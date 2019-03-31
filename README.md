@@ -1,5 +1,11 @@
 # VueSolitaire
 
+## How to play
+
+- Click on the card or card pile you want to move .The pile turns to blue.
+- Click on the destination card and if the move is legal the cards will stack below the target.
+- Click the pile on the lower-right corner for extra cards.
+
 [Demo](https://solitairevue.firebaseapp.com)
 
 ## Project setup

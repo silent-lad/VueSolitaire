@@ -1,4 +1,5 @@
 import { shuffle, uniq, chunk } from "lodash";
+var isEqual = require("lodash.isequal");
 
 export const processRank = function(rank) {
   if (rank == "K" || rank == "Q" || rank == "J" || rank == "A") {
@@ -59,37 +60,27 @@ export const isMovable = function(card, deck) {
   var ranks = movingCards.map(currCard => processRank(currCard.rank));
   var currRank = processRank(card.rank);
   for (var index = 1; index < ranks.length; index++) {
-    // if (currRank - ranks[index] != 1) {
-    //   console.log(currRank - ranks[index], currRank, ranks[index], ranks);
-    //   return false;
-    // }
+    if (currRank - ranks[index] != 1) {
+      return false;
+    }
     currRank = ranks[index];
   }
   return true;
 };
 
 export const checkPile = function(pile) {
-  var suitInConsideration = "";
-  var rankInConsideration = "";
-  var trailCount = 0;
-  pile.forEach(card => {
-    if (suitInConsideration == "") {
-      suitInConsideration = card.suit;
-      rankInConsideration = card.rank;
-      trailCount = 1;
-    } else if (suitInConsideration == card.suit) {
-      if (processRank(rankInConsideration) - processRank(card.rank) == 1) {
-        rankInConsideration = card.rank;
-        trailCount++;
-      } else {
-        trailCount = 1;
-        rankInConsideration = card.rank;
-        suitInConsideration = card.suit;
-      }
+  var ranks = pile.map(card => {
+    return processRank(card.rank);
+  });
+  var value = false;
+  ranks.forEach(rank => {
+    var checkArray = [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+    if (isEqual(checkArray, ranks.slice(ranks.indexOf(rank)))) {
+      console.log("hiiiasdhakuvsudf");
+
+      value = ranks.indexOf(rank);
     }
   });
-  if (trailCount == 13) {
-    return true;
-  }
-  return false;
+  return value;
 };

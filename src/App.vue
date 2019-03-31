@@ -32,6 +32,7 @@ import {
   isMovable
 } from "./assets/spiderSolitaire.js";
 import { normalInit } from "./assets/normalSolitaire.js";
+import { setTimeout } from "timers";
 
 export default {
   name: "mainTable",
@@ -51,9 +52,13 @@ export default {
   methods: {
     normalInit,
     spiderInit,
+    checkPile,
     processRank,
     checkMoveSpider,
     isMovable,
+    handComplete: function() {
+      console.log("complete");
+    },
     removeSelection: function() {
       console.log("hig");
       if (this.selectedCard != "") {
@@ -95,7 +100,6 @@ export default {
             element.isSelected = true;
           });
         }
-
         this.$forceUpdate();
       } else {
         if (checkMoveSpider(cardSelected, deck, this.selectedCard)) {
@@ -103,7 +107,6 @@ export default {
             var movedCards = this.selectedDeck.splice(
               this.selectedDeck.indexOf(this.selectedCard)
             );
-
             movedCards.forEach(newCard => {
               deck.push(newCard);
             });
@@ -112,22 +115,20 @@ export default {
             ) {
               this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
             }
-            console.log("dd");
-
+            var pileChecker = this.checkPile(deck);
+            console.log("pile", pileChecker);
+            if (pileChecker) {
+              setTimeout(() => {
+                deck.splice(pileChecker);
+                this.handComplete();
+              }, 700);
+            }
             this.removeSelection();
-            // this.$forceUpdate();
-
-            // deck.push(movedCards);
             console.log("hi", deck);
           } else {
-            console.log("dd");
             this.removeSelection();
-            console.log("fuck off");
-            // this.$forceUpdate();
           }
         } else {
-          console.log("dd");
-          console.log("nooooo");
           this.removeSelection();
         }
       }
@@ -138,8 +139,7 @@ export default {
     this.spiderInit();
     // this.normalInit.bind(this);
     // this.normsalInit();
-  },
-  computed: {}
+  }
 };
 </script>
 <style >
