@@ -8,10 +8,15 @@
     <div
       class="card card_holder"
       v-for="deck in decks.slice(0,10)"
-      :key="deck[0].rank+deck[0].deck+deck[0].suit"
+      :key="deck.indexOf(deck)"
       id="1"
     >
-      <transition-group name="list" tag="div">
+      <Holder 
+      v-if="deck.length==0" 
+      @click.native="selectCard('',deck,true)"
+      ></Holder>
+      <transition-group v-else name="list" tag="div">
+      
         <Card
           v-for="card in deck"
           :key="card.rank+card.deck+card.suit"
@@ -28,6 +33,7 @@
 
 <script>
 import Card from "./components/Card.vue";
+import Holder from "./components/Holder.vue";
 import { ranks, suits, symbols } from "./assets/gameInfo.json";
 import {
   spiderInit,
@@ -43,7 +49,7 @@ import shuffle2 from "./assets/shuffle2.wav"
 
 export default {
   name: "mainTable",
-  components: { Card },
+  components: { Card ,Holder},
   data: function() {
     return {
       ranks,
@@ -106,11 +112,33 @@ export default {
     },
     selectCard: function(cardSelected, deck,holder) {
       this.playSound();
+      if(holder&&this.selectedCard){
+        if(this.selectedCard.rank=='K'){
+          if (isMovable(this.selectedCard, this.selectedDeck)) {
+            var movedCards = this.selectedDeck.splice(
+              this.selectedDeck.indexOf(this.selectedCard)
+            );
+            movedCards.forEach(newCard => {
+              deck.push(newCard);
+            });
+            if (
+              this.selectedDeck[this.selectedDeck.length - 1].isDown == true
+            ) {
+              this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
+            } 
+            this.removeSelection();
+            console.log("hi", deck);
+          } else {
+            this.removeSelection();
+          }
+        }
+      }
       if (this.selectedCard == "") {
         if (cardSelected.isDown) {
           return;
         }
-        this.selectedCard = cardSelected;
+
+        try{this.selectedCard = cardSelected;
         this.selectedDeck = deck;
         this.selectedCard.isSelected = true;
         if (isMovable(this.selectedCard, this.selectedDeck)) {
@@ -121,7 +149,10 @@ export default {
             element.isSelected = true;
           });
         }
-        this.$forceUpdate();
+        this.$forceUpdate();}catch(e){
+          console.log(e);
+          
+        }
       } else {
         if (checkMoveSpider(cardSelected, deck, this.selectedCard)) {
           if (isMovable(this.selectedCard, this.selectedDeck)) {
