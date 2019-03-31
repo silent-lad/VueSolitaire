@@ -19,7 +19,10 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
-  <style>
-    
-  </style>
+  <script>
+    if(document.documentElement.clientWidth < 700) {
+      document.querySelector(".github-fork-ribbon").classList.add('left-bottom');
+      document.querySelector(".github-fork-ribbon").classList.remove('right-top');
+    }
+  </script>
 </html>

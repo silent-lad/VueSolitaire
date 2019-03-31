@@ -39,6 +39,7 @@ import {
 import { normalInit } from "./assets/normalSolitaire.js";
 import { setTimeout } from "timers";
 import flip from "./assets/flip.wav"
+import shuffle2 from "./assets/shuffle2.wav"
 
 export default {
   name: "mainTable",
@@ -90,8 +91,9 @@ export default {
       }
     },
     dealCards: function() {
-      this.playSound();
-      this.decks.forEach(deck => {
+      this.playSound(true);
+      // setTimeout(() => {
+        this.decks.forEach(deck => {
         if (this.decks[10].length > 0) {       
           var newCard = this.decks[10].pop();
           newCard.isDown = false;
@@ -99,6 +101,8 @@ export default {
         }
       });
       this.$forceUpdate();
+      // }, 500);
+      
     },
     selectCard: function(cardSelected, deck,holder) {
       this.playSound();
@@ -137,10 +141,7 @@ export default {
             if (pileChecker) {
                 deck.splice(pileChecker);
                 this.playSound();
-                this.playSound();
-                this.playSound();
-                this.playSound();
-                this.playSound();
+               
                 this.handComplete();
                 deck[deck.length-1].isDown = false;
             }
@@ -154,9 +155,24 @@ export default {
         }
       }
     },
-    playSound (sound) {
+    playSound (shuffle) {
+      if(shuffle){
+        
+        var audio = new Audio(shuffle2);
+        audio.play().then(_ => {
+          console.log(_);
+          
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+        
+        
+      }else {
         var audio = new Audio(flip);
         audio.play();
+      }
+        
     }
   },
   created() {
