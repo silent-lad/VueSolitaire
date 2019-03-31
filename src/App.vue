@@ -38,6 +38,7 @@ import {
 } from "./assets/spiderSolitaire.js";
 import { normalInit } from "./assets/normalSolitaire.js";
 import { setTimeout } from "timers";
+import flip from "./assets/flip.wav"
 
 export default {
   name: "mainTable",
@@ -52,7 +53,8 @@ export default {
       selectedCard: "",
       selectedDeck: "",
       selectedArray: [],
-      completedHands: 0
+      completedHands: 0,
+      flip
     };
   },
   methods: {
@@ -88,8 +90,9 @@ export default {
       }
     },
     dealCards: function() {
+      this.playSound();
       this.decks.forEach(deck => {
-        if (this.decks[10].length > 0) {
+        if (this.decks[10].length > 0) {       
           var newCard = this.decks[10].pop();
           newCard.isDown = false;
           deck.push(newCard);
@@ -98,6 +101,7 @@ export default {
       this.$forceUpdate();
     },
     selectCard: function(cardSelected, deck) {
+      this.playSound();
       if (this.selectedCard == "") {
         if (cardSelected.isDown) {
           return;
@@ -131,10 +135,14 @@ export default {
             var pileChecker = this.checkPile(deck);
             console.log("pile", pileChecker);
             if (pileChecker) {
-              setTimeout(() => {
                 deck.splice(pileChecker);
+                this.playSound();
+                this.playSound();
+                this.playSound();
+                this.playSound();
+                this.playSound();
                 this.handComplete();
-              }, 700);
+                deck[deck.length-1].isDown = false;
             }
             this.removeSelection();
             console.log("hi", deck);
@@ -145,13 +153,17 @@ export default {
           this.removeSelection();
         }
       }
+    },
+    playSound (sound) {
+        var audio = new Audio(flip);
+        audio.play();
     }
   },
   created() {
     this.spiderInit.bind(this);
     this.spiderInit();
     // this.normalInit.bind(this);
-    // this.normsalInit();
+    // this.normalInit();
   }
 };
 </script>
