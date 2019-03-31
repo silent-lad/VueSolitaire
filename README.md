@@ -1,6 +1,6 @@
 # VueSolitaire
 
-[Demo]()
+[Demo](https://solitairevue.firebaseapp.com)
 
 ## Project setup
 
