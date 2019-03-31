@@ -2,9 +2,9 @@
   <div class="green_table">
     <!-- <button @click="displayInit();"></button> -->
     <div
+      class="card card_holder"
       v-for="deck in decks.slice(0,10)"
       :key="deck[0].rank+deck[0].deck+deck[0].suit"
-      class="card_holder card"
       id="1"
     >
       <transition-group name="list" tag="div">
@@ -46,7 +46,8 @@ export default {
       cards: [],
       selectedCard: "",
       selectedDeck: "",
-      selectedArray: []
+      selectedArray: [],
+      completedHands: 0
     };
   },
   methods: {
@@ -56,8 +57,15 @@ export default {
     processRank,
     checkMoveSpider,
     isMovable,
+    gameOver: function() {
+      console.log("GameOver");
+    },
     handComplete: function() {
       console.log("complete");
+      this.completedHands++;
+      if (this.completedHands == 8) {
+        this.gameOver();
+      }
     },
     removeSelection: function() {
       console.log("hig");
@@ -192,9 +200,15 @@ body {
   height: 100vh;
   width: 100vw;
   padding: 0;
-  background: green;
+  /* background: green; */
+  background-image: radial-gradient(
+    rgba(57, 172, 57, 0.726),
+    rgb(0, 116, 0),
+    darkgreen
+  );
 }
 .card_holder {
+  /* card length margin */
   margin: 5% 0;
   list-style: none;
   background: rgba(0, 0, 0, 0.3);
@@ -215,6 +229,31 @@ body {
 .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
   opacity: 0;
   transform: translateY(30px);
+}
+@media screen and (max-width: 480px) {
+  .card {
+    height: 40px;
+  }
+  .card_stack.down {
+    margin-bottom: -30px;
+  }
+  .card_stack {
+    margin-bottom: -20px;
+  }
+  .rank {
+    font-size: 7px;
+    margin-left: 1px;
+  }
+  .rank.bottom {
+    /* position: absolute; */
+    position: relative;
+    top: 8px;
+    left: 3px;
+    text-align: left;
+    /* transform: translate(50%, 50%); */
+    transform: rotate(180deg);
+    /* padding-left: 5px; */
+  }
 }
 </style>
 
