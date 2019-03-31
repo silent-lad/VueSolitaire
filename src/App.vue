@@ -8,14 +8,14 @@
     <div
       class="card card_holder"
       v-for="deck in decks.slice(0,10)"
-      :key="deck.indexOf(deck)"
+      :key="deck.indexOf(deck)||'null'"
       id="1"
     >
       <Holder 
       v-if="deck.length==0" 
       @click.native="selectCard('',deck,true)"
       ></Holder>
-      <transition-group v-else name="list" tag="div">
+      <transition-group name="list" tag="div">
       
         <Card
           v-for="card in deck"
@@ -55,7 +55,217 @@ export default {
       ranks,
       suits,
       symbols,
-      decks: [],
+      decks: [
+    [
+      { "rank": "A", "isDown": true, "suit": "spades", "deck": 6 },
+      { "rank": "Q", "isDown": true, "suit": "spades", "deck": 8 },
+      { "rank": "8", "isDown": true, "suit": "spades", "deck": 5 },
+      { "rank": "7", "isDown": false, "suit": "spades", "deck": 4 }
+    ],
+    [
+      { "rank": "6", "isDown": true, "suit": "spades", "deck": 1 },
+      { "rank": "9", "isDown": true, "suit": "spades", "deck": 6 },
+      { "rank": "A", "isDown": true, "suit": "spades", "deck": 8 },
+      { "rank": "2", "isDown": true, "suit": "spades", "deck": 3 },
+      {
+        "rank": "J",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 1,
+        "isSelected": false
+      },
+      { "rank": "10", "isDown": false, "suit": "spades", "deck": 1 },
+      {
+        "rank": "9",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 3,
+        "isSelected": false
+      },
+      { "rank": "J", "isDown": false, "suit": "spades", "deck": 3 },
+      {
+        "rank": "10",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 8,
+        "isSelected": false
+      }
+    ],
+    [
+      { "rank": "7", "isDown": true, "suit": "spades", "deck": 6 },
+      { "rank": "8", "isDown": true, "suit": "spades", "deck": 1 },
+      { "rank": "K", "isDown": true, "suit": "spades", "deck": 3 },
+      { "rank": "J", "isDown": false, "suit": "spades", "deck": 2 },
+      { "rank": "7", "isDown": false, "suit": "spades", "deck": 5 },
+      { "rank": "3", "isDown": false, "suit": "spades", "deck": 7 },
+      {
+        "rank": "2",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 2,
+        "isSelected": false
+      },
+      {
+        "rank": "A",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 3,
+        "isSelected": false
+      },
+      { "rank": "8", "isDown": false, "suit": "spades", "deck": 2 },
+      {
+        "rank": "7",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 8,
+        "isSelected": false
+      }
+    ],
+    [
+      { "rank": "2", "isDown": true, "suit": "spades", "deck": 7 },
+      { "rank": "8", "isDown": true, "suit": "spades", "deck": 8 },
+      {
+        "rank": "3",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 5,
+        "isSelected": false
+      },
+      {
+        "rank": "2",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 4,
+        "isSelected": false
+      },
+      {
+        "rank": "6",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 8,
+        "isSelected": false
+      },
+      {
+        "rank": "5",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 3,
+        "isSelected": false
+      },
+      { "rank": "K", "isDown": false, "suit": "spades", "deck": 8 },
+      {
+        "rank": "Q",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 1,
+        "isSelected": false
+      },
+      {
+        "rank": "J",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 6,
+        "isSelected": false
+      },
+      {
+        "rank": "10",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 6,
+        "isSelected": false
+      }
+    ],
+    [
+      { "rank": "A", "isDown": true, "suit": "spades", "deck": 7 },
+      { "rank": "4", "isDown": true, "suit": "spades", "deck": 7 },
+      { "rank": "Q", "isDown": true, "suit": "spades", "deck": 2 },
+      { "rank": "Q", "isDown": true, "suit": "spades", "deck": 4 },
+      { "rank": "J", "isDown": false, "suit": "spades", "deck": 8 },
+      { "rank": "2", "isDown": false, "suit": "spades", "deck": 8 },
+      { "rank": "5", "isDown": false, "suit": "spades", "deck": 1 },
+      {
+        "rank": "4",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 4,
+        "isSelected": false
+      }
+    ],
+    [
+      { "rank": "Q", "isDown": true, "suit": "spades", "deck": 6 },
+      { "rank": "4", "isDown": true, "suit": "spades", "deck": 8 },
+      { "rank": "3", "isDown": false, "suit": "spades", "deck": 6 },
+      { "rank": "8", "isDown": false, "suit": "spades", "deck": 4 },
+      { "rank": "7", "isDown": false, "suit": "spades", "deck": 3 },
+      { "rank": "A", "isDown": false, "suit": "spades", "deck": 5 }
+    ],
+    [
+      { "rank": "10", "isDown": true, "suit": "spades", "deck": 4 },
+      { "rank": "J", "isDown": true, "suit": "spades", "deck": 4 },
+      { "rank": "5", "isDown": false, "suit": "spades", "deck": 6 },
+      { "rank": "A", "isDown": false, "suit": "spades", "deck": 1 },
+      { "rank": "9", "isDown": false, "suit": "spades", "deck": 7 }
+    ],
+    [
+      { "rank": "8", "isDown": true, "suit": "spades", "deck": 3 },
+      { "rank": "4", "isDown": true, "suit": "spades", "deck": 3 },
+      { "rank": "6", "isDown": false, "suit": "spades", "deck": 6 },
+      {
+        "rank": "5",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 5,
+        "isSelected": false
+      },
+      { "rank": "6", "isDown": false, "suit": "spades", "deck": 3 },
+      { "rank": "9", "isDown": false, "suit": "spades", "deck": 2 }
+    ],
+    [
+      { "rank": "10", "isDown": true, "suit": "spades", "deck": 7 },
+      { "rank": "10", "isDown": true, "suit": "spades", "deck": 5 },
+      { "rank": "4", "isDown": true, "suit": "spades", "deck": 2 },
+      { "rank": "6", "isDown": true, "suit": "spades", "deck": 4 },
+      { "rank": "K", "isDown": false, "suit": "spades", "deck": 2 },
+      { "rank": "9", "isDown": false, "suit": "spades", "deck": 4 },
+      { "rank": "3", "isDown": false, "suit": "spades", "deck": 4 },
+      {
+        "rank": "2",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 6,
+        "isSelected": false
+      }
+    ],
+    [
+      { "rank": "K", "isDown": false, "suit": "spades", "deck": 6 },
+      { "rank": "Q", "isDown": false, "suit": "spades", "deck": 1 },
+      { "rank": "J", "isDown": false, "suit": "spades", "deck": 4 },
+      { "rank": "10", "isDown":false, "suit": "spades", "deck": 7 },
+      { "rank": "9", "isDown": false, "suit": "spades", "deck": 2 },
+      { "rank": "8", "isDown": false, "suit": "spades", "deck": 1 },
+      { "rank": "7", "isDown": false, "suit": "spades", "deck": 5 },
+      { "rank": "6", "isDown": false, "suit": "spades", "deck": 7 },
+      { "rank": "5", "isDown": false, "suit": "spades", "deck": 5 },
+      { "rank": "4", "isDown": false, "suit": "spades", "deck": 3 },
+      { "rank": "3", "isDown": false, "suit": "spades", "deck": 6 },
+      { "rank": "2", "isDown": false, "suit": "spades", "deck": 8 }
+    ],
+    [
+      { "rank": "K", "isDown": true, "suit": "spades", "deck": 6 },
+      { "rank": "Q", "isDown": true, "suit": "spades", "deck": 1 },
+      { "rank": "J", "isDown": true, "suit": "spades", "deck": 4 },
+      { "rank": "10", "isDown": true, "suit": "spades", "deck": 7 },
+      { "rank": "9", "isDown": true, "suit": "spades", "deck": 2 },
+      { "rank": "8", "isDown": true, "suit": "spades", "deck": 1 },
+      { "rank": "7", "isDown": true, "suit": "spades", "deck": 5 },
+      { "rank": "6", "isDown": true, "suit": "spades", "deck": 7 },
+      { "rank": "5", "isDown": true, "suit": "spades", "deck": 5 },
+      { "rank": "4", "isDown": true, "suit": "spades", "deck": 3 },
+      { "rank": "3", "isDown": true, "suit": "spades", "deck": 6 },
+      { "rank": "2", "isDown": true, "suit": "spades", "deck": 8 }
+      
+    ]
+  ],
       cards: [],
       selectedCard: "",
       selectedDeck: "",
@@ -169,11 +379,14 @@ export default {
             }
             var pileChecker = this.checkPile(deck);
             console.log("pile", pileChecker);
-            if (pileChecker) {
+            if (typeof pileChecker == 'number') {
+              console.log(pileChecker,"jopjoj");
+              
                 deck.splice(pileChecker);
                 this.playSound();
                
                 this.handComplete();
+                if(deck.length!=0)
                 deck[deck.length-1].isDown = false;
             }
             this.removeSelection();
@@ -207,8 +420,8 @@ export default {
     }
   },
   created() {
-    this.spiderInit.bind(this);
-    this.spiderInit();
+    // this.spiderInit.bind(this);
+    // this.spiderInit();
     // this.normalInit.bind(this);
     // this.normalInit();
   }
