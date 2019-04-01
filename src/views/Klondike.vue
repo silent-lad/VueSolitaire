@@ -3,30 +3,54 @@
   <div class="mobile_warn card-5">
   <h1 style="padding:10px;">Please keep your phone in <span style="color:orange;">Landscape</span> mode to play the game</h1>
   </div>
+  <div class="upper_table">
+  <div style="position:absolute;top:0px;left:7%;" @click="dealCards()" class="card_holder card down"></div>
+  <div
+      class="card card_holder"
+      style="margin:5% 30px;cursor:pointer;"
+      v-for="(card,index) in foundation"
+      :key="index"
+      id="1"
+      @click="selectCard('',card,'foundation')"
+    >
+      <Holder 
+      v-if="card=''" 
+      ></Holder>
+      <transition-group name="list" tag="div">
+        <Card
+            v-if="card!=''"
+          :key="card.rank+card.suit"
+          :card="card"
+          :isSelected="card.isSelected"
+        ></Card>
+      </transition-group>
+    </div></div>
   <div class="green_table">
+
+  
     <!-- <button @click="displayInit();"></button> -->
     <div
       class="card card_holder"
-      v-for="deck in decks.slice(0,10)"
-      :key="deck.indexOf(deck)||'null'"
+      v-for="deck in decks.slice(0,7)"
+      :key="decks.indexOf(deck)||'null'"
       id="1"
     >
       <Holder 
       v-if="deck.length==0" 
-      @click.native="selectCard('',deck,true)"
+      @click.native="selectCard('',deck,'holder')"
       ></Holder>
       <transition-group name="list" tag="div">
       
         <Card
           v-for="card in deck"
-          :key="card.rank+card.deck+card.suit"
+          :key="card.rank+card.suit"
           :card="card"
           :isSelected="card.isSelected"
           @click.native="selectCard(card,deck)"
         ></Card>
       </transition-group>
     </div>
-    <div @click="dealCards()" class="pile card down"></div>
+    
   </div>
   </div>
 </template>
@@ -41,7 +65,7 @@ import {
   checkFoundation,
   isDroppable,
   isMovable
-} from "../assets/spiderSolitaire.js";
+} from "../assets/klondikeSolitaire.js";
 import flip from "../assets/flip.wav"
 import shuffle2 from "../assets/shuffle2.wav"
 
@@ -109,11 +133,24 @@ export default {
     },
     selectCard: function(cardSelected, deck,type) {
       this.playSound();
+      console.log(1);
+      
 
-      if(type=="foundation"){
+      if(type=='foundation'&&this.selectedCard){
+          console.log("asaksdn");
+          
           if(this.selectedCard!=""){
-              
+              if(this.selectedDeck[this.selectedDeck.length-1]==this.selectedCard||processRank(this.selectedCard)-processRank(cardSelected)==1){
+                    console.log("akhri");
+                    if(checkFoundation(deck,this.selectedCard)){
+                        console.log("akhri2");
+                        deck=this.selectedCard;
+                    } 
+                  this.removeSelection();
+              }
+              this.removeSelection();
           }else{
+              this.removeSelection();
               return;
           }
       }
@@ -141,27 +178,34 @@ export default {
         }
       }
       if (this.selectedCard == "") {
+          console.log(1);
         if (cardSelected.isDown) {
+            console.log(1);
           return;
         }
         this.selectedCard = cardSelected;
         this.selectedDeck = deck;
         this.selectedCard.isSelected = true;
         if (isMovable(this.selectedCard, this.selectedDeck)) {
+            console.log(1);
           this.selectedArray = this.selectedDeck.slice(
             this.selectedDeck.indexOf(this.selectedCard)
           );
+          console.log(1);
           this.selectedArray.forEach(element => {
             element.isSelected = true;
           });
         }
         this.$forceUpdate();
       } else {
-
+          console.log(2);
+          console.log(isDroppable(cardSelected, this.selectedCard));
         if (isDroppable(cardSelected, this.selectedCard)) {
-
+            
+            
+console.log(2);
           if (isMovable(this.selectedCard, this.selectedDeck)) {
-
+console.log(2);
             var movedCards = this.selectedDeck.splice(
               this.selectedDeck.indexOf(this.selectedCard)
             );
@@ -174,10 +218,17 @@ export default {
               ) {
                 this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
               }
-            }catch(e){}
+              console.log(this.selectedDeck[this.selectedDeck.length - 1].isDown);
+              this.$forceUpdate();
+              console.log("sdkjfa");
+              
+            }catch(e){
+                console.log(e);
+            }
             this.removeSelection();
             console.log("hi", deck);
           } else {
+              console.log(3);
             this.removeSelection();
           }
         } else {
@@ -200,12 +251,20 @@ export default {
       }   
     }
   },
+  watch:{
+      foundation:function(array){
+          ranks = array.map(el=>el.rank);
+          if(ranks==['K','K','K','K']){
+              this.gameOver()
+          }
+      }
+  },
   created() {
         this.klondikeInit.bind(this);
         this.klondikeInit();
     } 
   }
-};
+
 </script>
 <style >
 .mobile_warn {
@@ -258,6 +317,11 @@ body {
   );
   margin: 0px !important;
 }
+.upper_table {
+    display:flex;
+    /* justify-content:space-around; */
+    flex-direction: row-reverse;
+}
 .green_table {
   display: flex;
   border: none;
@@ -266,11 +330,11 @@ body {
   width: 100vw;
   padding: 0;
   /* background: green; */
-  background-image: radial-gradient(
+  /* background-image: radial-gradient(
     rgba(57, 172, 57, 0.726),
     rgb(0, 116, 0),
     darkgreen
-  );
+  ); */
 }
 .card_holder {
   /* card length margin */
@@ -356,6 +420,9 @@ body {
   .green_table{
     display:none;
   }   
+  .upper_table{
+      display:none;
+  }
 }
 /* @media screen and (orientation:landscape) { … } */
 </style>

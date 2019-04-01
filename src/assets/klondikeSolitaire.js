@@ -23,7 +23,7 @@ export const klondikeInit = function() {
 
   this.ranks.forEach(rank => {
     this.suits.forEach(suit => {
-        if(this.suit=='spades'||this.suit=='clubs')
+        if(suit=='spades'||suit=='clubs')
         {
             initDeck.push(
                 { rank, isDown: true, suit, deck: 1 ,color:'black'},
@@ -35,19 +35,24 @@ export const klondikeInit = function() {
             );
         }
   });
+  });
   var shuffledDeck = shuffle(initDeck);
   for(let i=0;i<7;i++){
-      this.decks[i]= shuffledDeck.slice(0, i)
+      this.decks[i]= shuffledDeck.slice((i*(i+1)) / 2, ((i*(i+1)) / 2)+i+1 );
   }
-  decks[7]=shuffledDeck;
+  this.decks[7]=shuffledDeck;
   this.decks.forEach((deck, index) => {
     if (index != 7) deck[deck.length - 1].isDown = false;
   });
+  
 };
 
 export const isDroppable = function(dropTarget,selectedCard){
     if(processRank(dropTarget.rank) - processRank(selectedCard.rank)==1){
+      console.log("hihhh");
         if(dropTarget.color!=selectedCard.color){
+          console.log("hi");
+          
             return true;
         }else{
             return false;
@@ -77,7 +82,13 @@ export const isMovable = function(card, deck) {
 };
 
 export const checkFoundation = function(foundation,card) {
-    if(foundation.suit==card.suit&&processRank(card)-processRank(foundation.rank)==1){
-        return true;
+    if(foundation==''||card.rank=='A'){
+      return true;
     }
+    else if(foundation.suit==card.suit&&processRank(card)-processRank(foundation.rank)==1){
+        return true;
+    }else {
+      return false;
+    }
+
 };

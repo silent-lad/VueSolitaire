@@ -8,7 +8,7 @@
     <div
       class="card card_holder"
       v-for="deck in decks.slice(0,10)"
-      :key="deck.indexOf(deck)||'null'"
+      :key="decks.indexOf(deck)||'null'"
       id="1"
     >
       <Holder 
@@ -276,11 +276,11 @@ body {
   width: 100vw;
   padding: 0;
   /* background: green; */
-  background-image: radial-gradient(
+  /* background-image: radial-gradient(
     rgba(57, 172, 57, 0.726),
     rgb(0, 116, 0),
     darkgreen
-  );
+  ); */
 }
 .card_holder {
   /* card length margin */
