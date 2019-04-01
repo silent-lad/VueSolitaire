@@ -16,10 +16,10 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 ## How to play
 
 - Click on the card or card pile you want to move .The pile turns to blue.
-  ![Alt text](./2.png "Title")
+  ![Alt text](./1.png "Title")
 - Click on the
   destination card and if the move is legal the cards will stack below the target.
-  ![Alt text](./1.png "Title")
+  ![Alt text](./2.png "Title")
 
 - Click the pile on the lower-right corner for extra cards.
 
