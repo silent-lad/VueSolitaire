@@ -23,6 +23,17 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 
 - Click the pile on the lower-right corner for extra cards.
 
+## About the project.
+
+### CSS
+
+- Each and every card is 100% css except for the SVG of the suit in the center ,which is made by illustrator tool.
+  ![Alt text](./4.png "Title")
+
+### Transitions
+
+This uses the transition methods given by vue.js
+
 ## Future scope
 
 I have made seperate files for rules on dealing cards,card selection and other stuff for each type of Solitaire eg:- 1 suit spider, 2 suit spider, traditional solitaire. I will be working on them to make it available for every type of solitaire.
