@@ -8,26 +8,12 @@
 </template>
 <script>
 export default {
+  name:'Holder',
   data: function() {
     return {
       isDisplayed:false
     };
   },
-  props: {
-    deckLength: Number
-  },
-  methods: {
-      display: function() {
-          if(this.deckLength==0){
-              this.isDisplayed = true;
-          }else{
-              this.isDisplayed = false;
-          }
-      }
-  },
-//   onUpdate(){
-//       this.display();
-//   }
 };
 </script>
 

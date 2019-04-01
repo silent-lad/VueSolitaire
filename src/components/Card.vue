@@ -14,6 +14,7 @@
 <script>
 import { ranks, suits, symbols } from "../assets/gameInfo.json";
 export default {
+  name:'Card',
   data: function() {
     return {
       symbols

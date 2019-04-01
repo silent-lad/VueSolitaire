@@ -11,7 +11,7 @@ export default new Router({
       path: "/",
       name: "solitaire",
       component: App
-    }
+    },
     // {
     //   path: '/about',
     //   name: 'about',
