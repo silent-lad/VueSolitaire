@@ -1,33 +1,39 @@
 <template>
-<div>
-  <div class="mobile_warn card-5">
-  <h1 style="padding:10px;">Please keep your phone in <span style="color:orange;">Landscape</span> mode to play the game</h1>
-  </div>
-  <div class="green_table">
-    <!-- <button @click="displayInit();"></button> -->
-    <div
-      class="card card_holder"
-      v-for="deck in decks.slice(0,10)"
-      :key="decks.indexOf(deck)||'null'"
-      id="1"
-    >
-      <Holder 
-      v-if="deck.length==0" 
-      @click.native="selectCard('',deck,true)"
-      ></Holder>
-      <transition-group name="list" tag="div">
-      
-        <Card
-          v-for="card in deck"
-          :key="card.rank+card.deck+card.suit"
-          :card="card"
-          :isSelected="card.isSelected"
-          @click.native="selectCard(card,deck)"
-        ></Card>
-      </transition-group>
+  <div>
+    <div class="mobile_warn card-5">
+      <h1 style="padding:10px;">
+        Please keep your phone in
+        <span style="color:orange;">Landscape</span> mode to play the game
+      </h1>
     </div>
-    <div @click="dealCards()" class="pile card down"></div>
-  </div>
+    <div class="green_table">
+      <!-- <button @click="displayInit();"></button> -->
+      <div
+        class="card card_holder"
+        v-for="deck in decks.slice(0, 10)"
+        :key="decks.indexOf(deck) || 'null'"
+        id="1"
+      >
+        <Holder
+          v-if="deck.length == 0"
+          @click.native="selectCard('', deck, true)"
+        ></Holder>
+        <transition-group name="list" tag="div">
+          <Card
+            v-for="card in deck"
+            :key="card.rank + card.deck + card.suit"
+            :card="card"
+            :isSelected="card.isSelected"
+            @click.native="selectCard(card, deck)"
+          ></Card>
+        </transition-group>
+      </div>
+      <div
+        @click="dealCards()"
+        class="pile card"
+        :class="decks[10].length != 0 ? 'down' : 'card'"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -44,13 +50,13 @@ import {
 } from "../assets/spiderSolitaire.js";
 import { normalInit } from "../assets/normalSolitaire.js";
 import { setTimeout } from "timers";
-import flip from "../assets/flip.wav"
-import shuffle2 from "../assets/shuffle2.wav"
+import flip from "../assets/flip.wav";
+import shuffle2 from "../assets/shuffle2.wav";
 
 export default {
   name: "Spider",
-  components: { Card ,Holder},
-  props:{gameMode:Number},
+  components: { Card, Holder },
+  props: { gameMode: String },
   data: function() {
     return {
       ranks,
@@ -98,20 +104,19 @@ export default {
     },
     dealCards: function() {
       this.playSound(true);
-        this.decks.forEach(deck => {
-        if (this.decks[10].length > 0) {       
+      this.decks.forEach(deck => {
+        if (this.decks[10].length > 0) {
           var newCard = this.decks[10].pop();
           newCard.isDown = false;
           deck.push(newCard);
         }
       });
       this.$forceUpdate();
-      
     },
-    selectCard: function(cardSelected, deck,holder) {
+    selectCard: function(cardSelected, deck, holder) {
       this.playSound();
-      if(holder&&this.selectedCard){
-        if(this.selectedCard.rank=='K'){
+      if (holder && this.selectedCard) {
+        if (this.selectedCard.rank == "K") {
           if (isMovable(this.selectedCard, this.selectedDeck)) {
             var movedCards = this.selectedDeck.splice(
               this.selectedDeck.indexOf(this.selectedCard)
@@ -119,13 +124,13 @@ export default {
             movedCards.forEach(newCard => {
               deck.push(newCard);
             });
-            if(deck.lenght!=0){
+            if (deck.lenght != 0) {
               if (
                 this.selectedDeck[this.selectedDeck.length - 1].isDown == true
               ) {
                 this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-              } 
-            }            
+              }
+            }
             this.removeSelection();
           } else {
             this.removeSelection();
@@ -137,28 +142,25 @@ export default {
           return;
         }
 
-        try{
+        try {
           this.selectedCard = cardSelected;
-        this.selectedDeck = deck;
-        this.selectedCard.isSelected = true;
-        if (isMovable(this.selectedCard, this.selectedDeck)) {
-          this.selectedArray = this.selectedDeck.slice(
-            this.selectedDeck.indexOf(this.selectedCard)
-          );
-          this.selectedArray.forEach(element => {
-            element.isSelected = true;
-          });
-        }
-        this.$forceUpdate();}catch(e){
+          this.selectedDeck = deck;
+          this.selectedCard.isSelected = true;
+          if (isMovable(this.selectedCard, this.selectedDeck)) {
+            this.selectedArray = this.selectedDeck.slice(
+              this.selectedDeck.indexOf(this.selectedCard)
+            );
+            this.selectedArray.forEach(element => {
+              element.isSelected = true;
+            });
+          }
+          this.$forceUpdate();
+        } catch (e) {
           console.log(e);
-          
         }
       } else {
-
         if (checkMoveSpider(cardSelected, deck, this.selectedCard)) {
-
           if (isMovable(this.selectedCard, this.selectedDeck)) {
-
             var movedCards = this.selectedDeck.splice(
               this.selectedDeck.indexOf(this.selectedCard)
             );
@@ -166,28 +168,25 @@ export default {
               deck.push(newCard);
             });
 
-           try{ 
+            try {
               if (
                 this.selectedDeck[this.selectedDeck.length - 1].isDown == true
               ) {
                 this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
               }
-            }catch(e){}
-            
+            } catch (e) {}
+
             var pileChecker = this.checkPile(deck);
-            
-            if (typeof pileChecker == 'number') {
-              
-              
-                deck.splice(pileChecker);
-                this.playSound();
-               
-                this.handComplete();
-                if(deck.length!=0)
-                deck[deck.length-1].isDown = false;
+            console.log(pileChecker, " pile");
+
+            if (typeof pileChecker == "number") {
+              deck.splice(pileChecker);
+              this.playSound();
+
+              this.handComplete();
+              if (deck.length != 0) deck[deck.length - 1].isDown = false;
             }
             this.removeSelection();
-           
           } else {
             this.removeSelection();
           }
@@ -196,21 +195,21 @@ export default {
         }
       }
     },
-    playSound (shuffle) {
-      if(shuffle){
+    playSound(shuffle) {
+      if (shuffle) {
         var audio = new Audio(shuffle2);
         audio.play();
-      }else {
+      } else {
         var audio = new Audio(flip);
         audio.play();
       }
     }
   },
   created() {
-    if(this.gameMode==1){
+    if (this.gameMode == "1") {
       this.spiderInit.bind(this);
       this.spiderInit();
-    }else {
+    } else {
       this.normalInit.bind(this);
       this.normalInit();
     }
@@ -219,7 +218,7 @@ export default {
 </script>
 <style >
 .mobile_warn {
-  display:none;
+  display: none;
 }
 .card_stack.down {
   margin-bottom: -125px;
@@ -243,7 +242,7 @@ export default {
 .card_stack.selected {
   box-shadow: 5px 5px 10px blue;
   border: 3px solid blue;
-  transform: translateY(20px) scale(1.1);
+  transform: translate(10px, 10px);
 }
 .card_deck {
   border: 2px solid black;
@@ -261,7 +260,7 @@ export default {
   background: green;
 } */
 body {
- background-image: radial-gradient(
+  background-image: radial-gradient(
     rgba(57, 172, 57, 0.726),
     rgb(0, 116, 0),
     darkgreen
@@ -290,7 +289,7 @@ body {
 }
 .pile {
   position: absolute;
-  top: 75vh;
+  top: 75%;
   left: 89.4vw;
 }
 .list-item {
@@ -306,7 +305,6 @@ body {
   transform: translateY(30px);
 }
 @media screen and (max-width: 780px) {
-  
   body {
     width: 100%;
     height: 100%;
@@ -339,33 +337,31 @@ body {
     /* padding-left: 5px; */
   }
   .card_stack.selected {
-  box-shadow: 5px 5px 10px blue;
-  border: 3px solid blue;
-  transform: translate(2px, 2px);
+    box-shadow: 5px 5px 10px blue;
+    border: 3px solid blue;
+    transform: translate(2px, 2px);
   }
 }
-@media screen and (orientation:portrait) {
-   .mobile_warn {
-
-   background: #D66666;
-  border-radius: 10px;
-  display: inline-block;
-  color: #A32A2C;
-  font-family: 'Montserrat', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  font-size:12px;
-  /* height: 100px; */
-  margin: 1rem;
-  position: relative;
-  width: 90%;
-
+@media screen and (orientation: portrait) {
+  .mobile_warn {
+    background: #d66666;
+    border-radius: 10px;
+    display: inline-block;
+    color: #a32a2c;
+    font-family: "Montserrat", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 12px;
+    /* height: 100px; */
+    margin: 1rem;
+    position: relative;
+    width: 90%;
   }
   .card-5 {
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-}
-  .green_table{
-    display:none;
-  }   
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  }
+  .green_table {
+    display: none;
+  }
 }
 /* @media screen and (orientation:landscape) { … } */
 </style>

@@ -1,31 +1,26 @@
 <template>
-  <div
-    class="card holder"
-    style="cursor:pointer;"
-    draggable="true"
-  >
-  </div>
+  <div class="card holder" style="cursor:pointer;" draggable="true"></div>
 </template>
 <script>
 export default {
-  name:'Holder',
+  name: "Holder",
   data: function() {
     return {
-      isDisplayed:false
+      isDisplayed: false
     };
-  },
+  }
 };
 </script>
 
 <style>
-.holder{
-    opacity:0;
+.holder {
+  opacity: 0;
 }
-.display{
-    display:block;
+.display {
+  display: block;
 }
 .notDisplay {
-    display:none;
+  display: none;
 }
 .card_stack {
   position: relative;
@@ -39,5 +34,4 @@ export default {
   border: 1px solid black;
   padding: 0;
 }
-
 </style>

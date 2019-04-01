@@ -23,44 +23,40 @@ export const klondikeInit = function() {
 
   this.ranks.forEach(rank => {
     this.suits.forEach(suit => {
-        if(suit=='spades'||suit=='clubs')
-        {
-            initDeck.push(
-                { rank, isDown: true, suit, deck: 1 ,color:'black'},
-            );
-        }
-        else {
-            initDeck.push(
-                { rank, isDown: true, suit, deck: 1 ,color:'red'},
-            );
-        }
-  });
+      if (suit == "spades" || suit == "clubs") {
+        initDeck.push({ rank, isDown: true, suit, deck: 1, color: "black" });
+      } else {
+        initDeck.push({ rank, isDown: true, suit, deck: 1, color: "red" });
+      }
+    });
   });
   var shuffledDeck = shuffle(initDeck);
-  for(let i=0;i<7;i++){
-      this.decks[i]= shuffledDeck.slice((i*(i+1)) / 2, ((i*(i+1)) / 2)+i+1 );
+  for (let i = 0; i < 7; i++) {
+    this.decks[i] = shuffledDeck.slice(
+      (i * (i + 1)) / 2,
+      (i * (i + 1)) / 2 + i + 1
+    );
   }
-  this.decks[7]=shuffledDeck;
+  this.decks[7] = shuffledDeck;
   this.decks.forEach((deck, index) => {
     if (index != 7) deck[deck.length - 1].isDown = false;
   });
-  
 };
 
-export const isDroppable = function(dropTarget,selectedCard){
-    if(processRank(dropTarget.rank) - processRank(selectedCard.rank)==1){
-      console.log("hihhh");
-        if(dropTarget.color!=selectedCard.color){
-          console.log("hi");
-          
-            return true;
-        }else{
-            return false;
-        }
-    }else{
-        return false;
+export const isDroppable = function(dropTarget, selectedCard) {
+  if (processRank(dropTarget.rank) - processRank(selectedCard.rank) == 1) {
+    console.log("hihhh");
+    if (dropTarget.color != selectedCard.color) {
+      console.log("hi");
+
+      return true;
+    } else {
+      return false;
     }
-}
+  } else {
+    return false;
+  }
+};
 
 export const isMovable = function(card, deck) {
   var movingCards = deck.slice(deck.indexOf(card));
@@ -72,8 +68,8 @@ export const isMovable = function(card, deck) {
     if (currRank - ranks[index] != 1) {
       return false;
     }
-    if(currColor==colors[index]){
-        return false;
+    if (currColor == colors[index]) {
+      return false;
     }
     currColor = colors[index];
     currRank = ranks[index];
@@ -81,14 +77,15 @@ export const isMovable = function(card, deck) {
   return true;
 };
 
-export const checkFoundation = function(foundation,card) {
-    if(foundation==''||card.rank=='A'){
-      return true;
-    }
-    else if(foundation.suit==card.suit&&processRank(card)-processRank(foundation.rank)==1){
-        return true;
-    }else {
-      return false;
-    }
-
+export const checkFoundation = function(foundation, card) {
+  if (foundation == "" || card.rank == "A") {
+    return true;
+  } else if (
+    foundation.suit == card.suit &&
+    processRank(card) - processRank(foundation.rank) == 1
+  ) {
+    return true;
+  } else {
+    return false;
+  }
 };

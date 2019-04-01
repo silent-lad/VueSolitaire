@@ -1,57 +1,59 @@
 <template>
-<div>
-  <div class="mobile_warn card-5">
-  <h1 style="padding:10px;">Please keep your phone in <span style="color:orange;">Landscape</span> mode to play the game</h1>
-  </div>
-  <div class="upper_table">
-  <div style="position:absolute;top:0px;left:7%;" @click="dealCards()" class="card_holder card down"></div>
-  <div
-      class="card card_holder"
-      style="margin:5% 30px;cursor:pointer;"
-      v-for="(card,index) in foundation"
-      :key="index"
-      id="1"
-      @click="selectCard('',card,'foundation')"
-    >
-      <Holder 
-      v-if="card=''" 
-      ></Holder>
-      <transition-group name="list" tag="div">
-        <Card
-            v-if="card!=''"
-          :key="card.rank+card.suit"
-          :card="card"
-          :isSelected="card.isSelected"
-        ></Card>
-      </transition-group>
-    </div></div>
-  <div class="green_table">
-
-  
-    <!-- <button @click="displayInit();"></button> -->
-    <div
-      class="card card_holder"
-      v-for="deck in decks.slice(0,7)"
-      :key="decks.indexOf(deck)||'null'"
-      id="1"
-    >
-      <Holder 
-      v-if="deck.length==0" 
-      @click.native="selectCard('',deck,'holder')"
-      ></Holder>
-      <transition-group name="list" tag="div">
-      
-        <Card
-          v-for="card in deck"
-          :key="card.rank+card.suit"
-          :card="card"
-          :isSelected="card.isSelected"
-          @click.native="selectCard(card,deck)"
-        ></Card>
-      </transition-group>
+  <div>
+    <div class="mobile_warn card-5">
+      <h1 style="padding:10px;">
+        Please keep your phone in
+        <span style="color:orange;">Landscape</span> mode to play the game
+      </h1>
     </div>
-    
-  </div>
+    <div class="upper_table">
+      <div
+        style="position:absolute;top:0px;left:7%;"
+        @click="dealCards()"
+        class="card_holder card down"
+      ></div>
+      <div
+        class="card card_holder"
+        style="margin:5% 30px;cursor:pointer;"
+        v-for="(card, index) in foundation"
+        :key="index"
+        id="1"
+        @click="selectCard('', card, 'foundation')"
+      >
+        <Holder v-if="(card = '')"></Holder>
+        <transition-group name="list" tag="div">
+          <Card
+            v-if="card != ''"
+            :key="card.rank + card.suit"
+            :card="card"
+            :isSelected="card.isSelected"
+          ></Card>
+        </transition-group>
+      </div>
+    </div>
+    <div class="green_table">
+      <!-- <button @click="displayInit();"></button> -->
+      <div
+        class="card card_holder"
+        v-for="deck in decks.slice(0, 7)"
+        :key="decks.indexOf(deck) || 'null'"
+        id="1"
+      >
+        <Holder
+          v-if="deck.length == 0"
+          @click.native="selectCard('', deck, 'holder')"
+        ></Holder>
+        <transition-group name="list" tag="div">
+          <Card
+            v-for="card in deck"
+            :key="card.rank + card.suit"
+            :card="card"
+            :isSelected="card.isSelected"
+            @click.native="selectCard(card, deck)"
+          ></Card>
+        </transition-group>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,20 +68,20 @@ import {
   isDroppable,
   isMovable
 } from "../assets/klondikeSolitaire.js";
-import flip from "../assets/flip.wav"
-import shuffle2 from "../assets/shuffle2.wav"
+import flip from "../assets/flip.wav";
+import shuffle2 from "../assets/shuffle2.wav";
 
 export default {
   name: "Klondike",
-  components: { Card ,Holder},
-  props:{gameMode:Number},
+  components: { Card, Holder },
+  props: { gameMode: Number },
   data: function() {
     return {
       ranks,
       suits,
       symbols,
       decks: [],
-      foundation:["","","",""],
+      foundation: ["", "", "", ""],
       selectedCard: "",
       selectedDeck: "",
       selectedArray: [],
@@ -121,41 +123,43 @@ export default {
     },
     dealCards: function() {
       this.playSound(true);
-        this.decks.forEach(deck => {
-        if (this.decks[7].length > 0) {       
+      this.decks.forEach(deck => {
+        if (this.decks[7].length > 0) {
           var newCard = this.decks[7].pop();
           newCard.isDown = false;
           deck.push(newCard);
         }
       });
       this.$forceUpdate();
-      
     },
-    selectCard: function(cardSelected, deck,type) {
+    selectCard: function(cardSelected, deck, type) {
       this.playSound();
       console.log(1);
-      
 
-      if(type=='foundation'&&this.selectedCard){
-          console.log("asaksdn");
-          
-          if(this.selectedCard!=""){
-              if(this.selectedDeck[this.selectedDeck.length-1]==this.selectedCard||processRank(this.selectedCard)-processRank(cardSelected)==1){
-                    console.log("akhri");
-                    if(checkFoundation(deck,this.selectedCard)){
-                        console.log("akhri2");
-                        deck=this.selectedCard;
-                    } 
-                  this.removeSelection();
-              }
-              this.removeSelection();
-          }else{
-              this.removeSelection();
-              return;
+      if (type == "foundation" && this.selectedCard) {
+        console.log("asaksdn");
+
+        if (this.selectedCard != "") {
+          if (
+            this.selectedDeck[this.selectedDeck.length - 1] ==
+              this.selectedCard ||
+            processRank(this.selectedCard) - processRank(cardSelected) == 1
+          ) {
+            console.log("akhri");
+            if (checkFoundation(deck, this.selectedCard)) {
+              console.log("akhri2");
+              deck = this.selectedCard;
+            }
+            this.removeSelection();
           }
+          this.removeSelection();
+        } else {
+          this.removeSelection();
+          return;
+        }
       }
-      if(type=="holder"&&this.selectedCard){
-        if(this.selectedCard.rank=='K'){
+      if (type == "holder" && this.selectedCard) {
+        if (this.selectedCard.rank == "K") {
           if (isMovable(this.selectedCard, this.selectedDeck)) {
             var movedCards = this.selectedDeck.splice(
               this.selectedDeck.indexOf(this.selectedCard)
@@ -163,14 +167,14 @@ export default {
             movedCards.forEach(newCard => {
               deck.push(newCard);
             });
-            if(deck.length!=0){
+            if (deck.length != 0) {
               if (
                 this.selectedDeck[this.selectedDeck.length - 1].isDown == true
               ) {
                 this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-              } 
+              }
             }
-            
+
             this.removeSelection();
           } else {
             this.removeSelection();
@@ -178,16 +182,16 @@ export default {
         }
       }
       if (this.selectedCard == "") {
-          console.log(1);
+        console.log(1);
         if (cardSelected.isDown) {
-            console.log(1);
+          console.log(1);
           return;
         }
         this.selectedCard = cardSelected;
         this.selectedDeck = deck;
         this.selectedCard.isSelected = true;
         if (isMovable(this.selectedCard, this.selectedDeck)) {
-            console.log(1);
+          console.log(1);
           this.selectedArray = this.selectedDeck.slice(
             this.selectedDeck.indexOf(this.selectedCard)
           );
@@ -198,37 +202,36 @@ export default {
         }
         this.$forceUpdate();
       } else {
-          console.log(2);
-          console.log(isDroppable(cardSelected, this.selectedCard));
+        console.log(2);
+        console.log(isDroppable(cardSelected, this.selectedCard));
         if (isDroppable(cardSelected, this.selectedCard)) {
-            
-            
-console.log(2);
+          console.log(2);
           if (isMovable(this.selectedCard, this.selectedDeck)) {
-console.log(2);
+            console.log(2);
             var movedCards = this.selectedDeck.splice(
               this.selectedDeck.indexOf(this.selectedCard)
             );
             movedCards.forEach(newCard => {
               deck.push(newCard);
             });
-           try{ 
+            try {
               if (
                 this.selectedDeck[this.selectedDeck.length - 1].isDown == true
               ) {
                 this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
               }
-              console.log(this.selectedDeck[this.selectedDeck.length - 1].isDown);
+              console.log(
+                this.selectedDeck[this.selectedDeck.length - 1].isDown
+              );
               this.$forceUpdate();
               console.log("sdkjfa");
-              
-            }catch(e){
-                console.log(e);
+            } catch (e) {
+              console.log(e);
             }
             this.removeSelection();
             console.log("hi", deck);
           } else {
-              console.log(3);
+            console.log(3);
             this.removeSelection();
           }
         } else {
@@ -236,39 +239,40 @@ console.log(2);
         }
       }
     },
-    playSound (shuffle) {
-      if(shuffle){   
+    playSound(shuffle) {
+      if (shuffle) {
         var audio = new Audio(shuffle2);
-        audio.play().then(_ => {
-          console.log(_); 
-        })
-        .catch(error => {
-          console.log(error.message);
-        });    
-      }else {
+        audio
+          .play()
+          .then(_ => {
+            console.log(_);
+          })
+          .catch(error => {
+            console.log(error.message);
+          });
+      } else {
         var audio = new Audio(flip);
         audio.play();
-      }   
+      }
     }
   },
-  watch:{
-      foundation:function(array){
-          ranks = array.map(el=>el.rank);
-          if(ranks==['K','K','K','K']){
-              this.gameOver()
-          }
+  watch: {
+    foundation: function(array) {
+      ranks = array.map(el => el.rank);
+      if (ranks == ["K", "K", "K", "K"]) {
+        this.gameOver();
       }
+    }
   },
   created() {
-        this.klondikeInit.bind(this);
-        this.klondikeInit();
-    } 
+    this.klondikeInit.bind(this);
+    this.klondikeInit();
   }
-
+};
 </script>
 <style >
 .mobile_warn {
-  display:none;
+  display: none;
 }
 .card_stack.down {
   margin-bottom: -125px;
@@ -310,7 +314,7 @@ console.log(2);
   background: green;
 } */
 body {
- background-image: radial-gradient(
+  background-image: radial-gradient(
     rgba(57, 172, 57, 0.726),
     rgb(0, 116, 0),
     darkgreen
@@ -318,9 +322,9 @@ body {
   margin: 0px !important;
 }
 .upper_table {
-    display:flex;
-    /* justify-content:space-around; */
-    flex-direction: row-reverse;
+  display: flex;
+  /* justify-content:space-around; */
+  flex-direction: row-reverse;
 }
 .green_table {
   display: flex;
@@ -360,7 +364,6 @@ body {
   transform: translateY(30px);
 }
 @media screen and (max-width: 780px) {
-  
   body {
     width: 100%;
     height: 100%;
@@ -393,35 +396,33 @@ body {
     /* padding-left: 5px; */
   }
   .card_stack.selected {
-  box-shadow: 5px 5px 10px blue;
-  border: 3px solid blue;
-  transform: translate(2px, 2px);
+    box-shadow: 5px 5px 10px blue;
+    border: 3px solid blue;
+    transform: translate(2px, 2px);
   }
 }
-@media screen and (orientation:portrait) {
-   .mobile_warn {
-
-   background: #D66666;
-  border-radius: 10px;
-  display: inline-block;
-  color: #A32A2C;
-  font-family: 'Montserrat', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  font-size:12px;
-  /* height: 100px; */
-  margin: 1rem;
-  position: relative;
-  width: 90%;
-
+@media screen and (orientation: portrait) {
+  .mobile_warn {
+    background: #d66666;
+    border-radius: 10px;
+    display: inline-block;
+    color: #a32a2c;
+    font-family: "Montserrat", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 12px;
+    /* height: 100px; */
+    margin: 1rem;
+    position: relative;
+    width: 90%;
   }
   .card-5 {
-  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
-}
-  .green_table{
-    display:none;
-  }   
-  .upper_table{
-      display:none;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  }
+  .green_table {
+    display: none;
+  }
+  .upper_table {
+    display: none;
   }
 }
 /* @media screen and (orientation:landscape) { … } */
