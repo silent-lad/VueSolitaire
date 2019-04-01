@@ -47,11 +47,11 @@ import {
   checkPile,
   checkMoveSpider,
   isMovable
-} from "../assets/spiderSolitaire.js";
-import { normalInit } from "../assets/normalSolitaire.js";
+} from "../assets/js/spiderSolitaire.js";
+import { normalInit } from "../assets/js/normalSolitaire.js";
 import { setTimeout } from "timers";
-import flip from "../assets/flip.wav";
-import shuffle2 from "../assets/shuffle2.wav";
+import flip from "../assets/audio/flip.wav";
+import shuffle2 from "../assets/audio/shuffle2.wav";
 
 export default {
   name: "Spider",
@@ -217,152 +217,5 @@ export default {
 };
 </script>
 <style >
-.mobile_warn {
-  display: none;
-}
-.card_stack.down {
-  margin-bottom: -125px;
-}
-.card_stack {
-  transition: all 0.2s linear;
-  position: relative;
-  margin-bottom: -100px;
-}
-.card {
-  box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.5);
-  width: 7vw;
-  height: 140px;
-  border-radius: 4px;
-  border: 1px solid black;
-  padding: 0;
-}
-.card_stack:hover {
-  box-shadow: 4px 4px 10px rgb(247, 210, 0);
-}
-.card_stack.selected {
-  box-shadow: 5px 5px 10px blue;
-  border: 3px solid blue;
-  transform: translate(10px, 10px);
-}
-.card_deck {
-  border: 2px solid black;
-  border-radius: 10%;
-  width: 8vw;
-  list-style: none;
-  margin-left: none;
-  margin-top: -150%;
-  margin: 5% 0;
-  padding: 0;
-  height: 140px;
-  background: rgb(124, 7, 7);
-}
-/* html {
-  background: green;
-} */
-body {
-  background-image: radial-gradient(
-    rgba(57, 172, 57, 0.726),
-    rgb(0, 116, 0),
-    darkgreen
-  );
-  margin: 0px !important;
-}
-.green_table {
-  display: flex;
-  border: none;
-  justify-content: space-evenly;
-  height: 100vh;
-  width: 100vw;
-  padding: 0;
-  /* background: green; */
-  /* background-image: radial-gradient(
-    rgba(57, 172, 57, 0.726),
-    rgb(0, 116, 0),
-    darkgreen
-  ); */
-}
-.card_holder {
-  /* card length margin */
-  margin: 5% 0;
-  list-style: none;
-  background: rgba(0, 0, 0, 0.3);
-}
-.pile {
-  position: absolute;
-  top: 75%;
-  left: 89.4vw;
-}
-.list-item {
-  display: inline-block;
-  margin-right: 10px;
-}
-.list-enter-active,
-.list-leave-active {
-  transition: all 1s;
-}
-.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateY(30px);
-}
-@media screen and (max-width: 780px) {
-  body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .card {
-    height: 60px;
-  }
-  .card_stack.down {
-    margin-bottom: -55px;
-  }
-  .card_stack {
-    margin-bottom: -45px;
-  }
-  .rank {
-    font-size: 9px;
-    margin-left: 1px;
-  }
-  .rank.bottom {
-    /* position: absolute; */
-    position: relative;
-    top: 17px;
-    left: 3px;
-    text-align: left;
-    /* transform: translate(50%, 50%); */
-    transform: rotate(180deg);
-    /* padding-left: 5px; */
-  }
-  .card_stack.selected {
-    box-shadow: 5px 5px 10px blue;
-    border: 3px solid blue;
-    transform: translate(2px, 2px);
-  }
-}
-@media screen and (orientation: portrait) {
-  .mobile_warn {
-    background: #d66666;
-    border-radius: 10px;
-    display: inline-block;
-    color: #a32a2c;
-    font-family: "Montserrat", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    font-size: 12px;
-    /* height: 100px; */
-    margin: 1rem;
-    position: relative;
-    width: 90%;
-  }
-  .card-5 {
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-  }
-  .green_table {
-    display: none;
-  }
-}
-/* @media screen and (orientation:landscape) { … } */
 </style>
 

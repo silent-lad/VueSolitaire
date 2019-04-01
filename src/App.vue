@@ -1,5 +1,6 @@
 <template>
-<SpiderSolitaire gameMode=1></SpiderSolitaire>
+  <SpiderSolitaire gameMode="1"></SpiderSolitaire>
+  <!-- <KlondikeSolitaire></KlondikeSolitaire> -->
 </template>
 
 <script>
@@ -8,15 +9,13 @@ import KlondikeSolitaire from "./views/Klondike.vue";
 
 export default {
   name: "mainTable",
-  components: { SpiderSolitaire,KlondikeSolitaire},
+  components: { SpiderSolitaire, KlondikeSolitaire },
   data: function() {
-    return {
-    }
+    return {};
   }
-    
 };
 </script>
 <style >
-
+@import "./assets/css/style.css";
 </style>
 

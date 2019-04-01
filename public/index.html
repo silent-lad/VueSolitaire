@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="<%= BASE_URL %>sl.png" />
+    <link rel="icon" href="./sl.png" />
     <title>VueSolitaire</title>
     <link
       rel="stylesheet"
@@ -13,7 +13,7 @@
     <meta property="og:title" content="VueSolitaire" />
     <meta property="og:description" content="Solitaire made on Vue.js" />
     <meta property="og:url" content="https://solitairevue.firebaseapp.com" />
-    <meta property="og:image" content="<%= BASE_URL %>1.png" />
+    <meta property="og:image" content="./1.png" />
     <!-- For Google -->
     <meta name="description" content="Solitaire made on Vue.js" />
     <meta name="keywords" content="Solitaire Vue" />
@@ -26,7 +26,7 @@
     />
     <meta name="twitter:title" content="VueSolitaire" />
     <meta name="twitter:description" content="Solitaire made on Vue.js" />
-    <meta name="twitter:image" content="<%= BASE_URL %>1.png" />
+    <meta name="twitter:image" content="./1.png" />
   </head>
   <body>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -60,14 +60,11 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
-  <script>
-    if (document.documentElement.clientWidth < 700) {
-      document
-        .querySelector(".github-fork-ribbon")
-        .classList.add("left-bottom");
-      document
-        .querySelector(".github-fork-ribbon")
-        .classList.remove("right-top");
+  <style>
+    @media screen and (max-width: 800px) {
+      .github-fork-ribbon {
+        display: none;
+      }
     }
-  </script>
+  </style>
 </html>
