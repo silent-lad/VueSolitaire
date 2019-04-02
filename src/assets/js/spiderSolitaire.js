@@ -74,9 +74,9 @@ export const checkPile = function(pile) {
   });
   var value = false;
   const checkArray = [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-  if( isEqual(checkArray, ranks.slice(-13))) {
-    console.log("faad veere faad");    
-    value = ranks.length -13;
-  };
+  if (isEqual(checkArray, ranks.slice(-13))) {
+    console.log("faad veere faad");
+    value = ranks.length - 13;
+  }
   return value;
 };

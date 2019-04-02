@@ -26,7 +26,7 @@
           ></Card>
         </div>
         <div
-          class="card card_holder"
+          class="card card_holder "
           style="margin:5% 5% 0px 0px;cursor:pointer;"
           v-for="(card, index) in foundation"
           :key="index"
@@ -284,7 +284,7 @@ export default {
   }
 };
 </script>
-<style >
+<style>
 .card_stack {
   position: relative;
   margin-bottom: -100px;

@@ -16,10 +16,13 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 ## How to play
 
 - Click on the card or card pile you want to move .The pile turns to blue.
-  ![Alt text](./1.png "Title")
+
+<img src="./1.png" width="100%">
+
 - Click on the
   destination card and if the move is legal the cards will stack below the target.
-  ![Alt text](./2.png "Title")
+
+<img src="./2.png" width="100%">
 
 - Click the pile on the lower-right corner for extra cards.
 
@@ -28,18 +31,25 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 ### CSS
 
 - Each and every card is 100% css except for the SVG of the suit in the center ,which is made by illustrator tool.
-  ![Alt text](./4.png "Title")
 
-### Transitions
-
-This uses the transition methods given by vue.js
+  <img src="./4.png" width="30%">
 
 ## Future scope
 
-I have made seperate files for rules on dealing cards,card selection and other stuff for each type of Solitaire eg:- 1 suit spider, 2 suit spider, traditional solitaire. I will be working on them to make it available for every type of solitaire.
+Make it drag and drop compliable.
 
-# Coming Soon .. Klondiak Solitaire (in dev).
+# Variants
 
-![Alt text](./3.png "Title")
+## [Klondike](https://solitairevue.firebaseapp.com/klondike)
+
+<img src="./3.png" width="50%">
+
+## [Spider 4 Suit](https://solitairevue.firebaseapp.com/spider/2)
+
+<img src="./5.png" width="50%">
+
+## [Spider 1 Suit](https://solitairevue.firebaseapp.com/)
+
+<img src="./1.png" width="50%">
 
 ### Contributions are Welcome
