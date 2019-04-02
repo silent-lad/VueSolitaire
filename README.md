@@ -36,19 +36,21 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 
 ## Future scope
 
-Make it drag and drop compliable.
+- Make it drag and drop compliable.
+- Add winning animation.
+- Make klondike one better.
 
 # Variants
 
-## [Klondike](https://solitairevue.firebaseapp.com/klondike)
+## [**Klondike** - solitairevue.firebaseapp.com/klondike](https://solitairevue.firebaseapp.com/klondike)
 
 <img src="./3.png" width="50%">
 
-## [Spider 4 Suit](https://solitairevue.firebaseapp.com/spider/2)
+## [**Spider 4 Suit** - solitairevue.firebaseapp.com/spider/2](https://solitairevue.firebaseapp.com/spider/2)
 
 <img src="./5.png" width="50%">
 
-## [Spider 1 Suit](https://solitairevue.firebaseapp.com/)
+## [**Spider 1 Suit** - solitairevue.firebaseapp.com/](https://solitairevue.firebaseapp.com/)
 
 <img src="./1.png" width="50%">
 

@@ -40,7 +40,7 @@ let router = new Router({
     },
     {
       path: "*",
-      redirect: "/spider/1"
+      redirect: "/"
     }
   ]
 });

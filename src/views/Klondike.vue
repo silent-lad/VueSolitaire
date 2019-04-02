@@ -165,6 +165,15 @@ export default {
             console.log("akhri2");
             this.foundation[deck] = this.selectedCard;
             this.selectedDeck.pop();
+            if (
+              this.selectedDeck[this.selectedDeck.length - 1].isDown == true
+            ) {
+              console.log("skfdjljdsfljbsdlfjbljb");
+
+              this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
+            } else {
+              console.log("omg");
+            }
             // cardSelected = this.selectedCard;
           }
           this.removeSelection();
