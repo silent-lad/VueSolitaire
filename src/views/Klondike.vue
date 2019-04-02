@@ -16,8 +16,8 @@
         ></div>
         <div
           style="position:absolute;top:-10px;left:16%;"
-          @click="selectCard()"
           class="card_holder card "
+          @click="selectCard(dealtCards[dealtCards.length - 1], dealtCards)"
         >
           <Card
             v-if="dealtCards.length != 0"
@@ -31,17 +31,15 @@
           v-for="(card, index) in foundation"
           :key="index"
           id="1"
-          @click="selectCard(card, deck)"
+          @click="selectCard(card, index, 'foundation')"
         >
           <Holder v-if="card == ''"></Holder>
-          <transition-group name="list" tag="div">
-            <Card
-              v-if="card != ''"
-              :key="card.rank + card.suit"
-              :card="card"
-              :isSelected="card.isSelected"
-            ></Card>
-          </transition-group>
+          <Card
+            v-if="card != ''"
+            :key="card.rank + card.suit"
+            :card="card"
+            :isSelected="card.isSelected"
+          ></Card>
         </div>
       </div>
       <div class="bottom_table">
@@ -157,24 +155,23 @@ export default {
       if (type == "foundation" && this.selectedCard) {
         console.log("asaksdn");
 
-        if (this.selectedCard != "") {
-          if (
-            this.selectedDeck[this.selectedDeck.length - 1] ==
-              this.selectedCard ||
-            processRank(this.selectedCard) - processRank(cardSelected) == 1
-          ) {
-            console.log("akhri");
-            if (checkFoundation(deck, this.selectedCard)) {
-              console.log("akhri2");
-              deck = this.selectedCard;
-            }
-            this.removeSelection();
+        if (
+          this.selectedDeck[this.selectedDeck.length - 1] ==
+            this.selectedCard ||
+          processRank(this.selectedCard) - processRank(cardSelected) == 1
+        ) {
+          console.log("akhri");
+          if (checkFoundation(cardSelected, this.selectedCard)) {
+            console.log("akhri2");
+            this.foundation[deck] = this.selectedCard;
+            this.selectedDeck.pop();
+            // cardSelected = this.selectedCard;
           }
-          this.removeSelection();
-        } else {
           this.removeSelection();
           return;
         }
+        this.removeSelection();
+        return;
       }
       if (type == "holder" && this.selectedCard) {
         if (this.selectedCard.rank == "K") {
@@ -232,20 +229,19 @@ export default {
             movedCards.forEach(newCard => {
               deck.push(newCard);
             });
-            try {
-              if (
-                this.selectedDeck[this.selectedDeck.length - 1].isDown == true
-              ) {
-                this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-              }
-              console.log(
-                this.selectedDeck[this.selectedDeck.length - 1].isDown
-              );
-              this.$forceUpdate();
-              console.log("sdkjfa");
-            } catch (e) {
-              console.log(e);
+            if (
+              this.selectedDeck[this.selectedDeck.length - 1].isDown == true
+            ) {
+              console.log("skfdjljdsfljbsdlfjbljb");
+
+              this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
+            } else {
+              console.log("omg");
             }
+            console.log(this.selectedDeck[this.selectedDeck.length - 1].isDown);
+            this.$forceUpdate();
+            console.log("sdkjfa");
+
             this.removeSelection();
             console.log("hi", deck);
           } else {

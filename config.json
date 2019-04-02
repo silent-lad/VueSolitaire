@@ -207,10 +207,19 @@
       { "rank": "4", "isDown": true, "suit": "spades", "deck": 3 },
       { "rank": "3", "isDown": true, "suit": "spades", "deck": 6 },
       { "rank": "2", "isDown": true, "suit": "spades", "deck": 8 }
-      
     ]
   ],
-  "almostEmpty":[[],[],[],[],[],[],[],[{ "rank": "A", "isDown": false, "suit": "spades", "deck": 8 }],[{ "rank": "K", "isDown": false, "suit": "spades", "deck": 6 },
+  "almostEmpty": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [{ "rank": "A", "isDown": false, "suit": "spades", "deck": 8 }],
+    [
+      { "rank": "K", "isDown": false, "suit": "spades", "deck": 6 },
       { "rank": "Q", "isDown": false, "suit": "spades", "deck": 1 },
       { "rank": "J", "isDown": false, "suit": "spades", "deck": 4 },
       { "rank": "10", "isDown": false, "suit": "spades", "deck": 7 },
@@ -221,5 +230,334 @@
       { "rank": "5", "isDown": false, "suit": "spades", "deck": 5 },
       { "rank": "4", "isDown": false, "suit": "spades", "deck": 3 },
       { "rank": "3", "isDown": false, "suit": "spades", "deck": 6 },
-      { "rank": "2", "isDown": false, "suit": "spades", "deck": 8 }],[]]
+      { "rank": "2", "isDown": false, "suit": "spades", "deck": 8 }
+    ],
+    []
+  ],
+  "klondike": [
+    [
+      {
+        "rank": "J",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 1,
+        "color": "black"
+      }
+    ],
+    [
+      {
+        "rank": "9",
+        "isDown": true,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "2",
+        "isDown": false,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red"
+      }
+    ],
+    [
+      {
+        "rank": "J",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "J",
+        "isDown": false,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red",
+        "isSelected": false
+      }
+    ],
+    [
+      {
+        "rank": "6",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "A",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "9",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "6",
+        "isDown": false,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red",
+        "isSelected": false
+      },
+      {
+        "rank": "5",
+        "isDown": false,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black",
+        "isSelected": false
+      },
+      {
+        "rank": "4",
+        "isDown": false,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red",
+        "isSelected": false
+      }
+    ],
+    [
+      {
+        "rank": "3",
+        "isDown": true,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "4",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "6",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "K",
+        "isDown": true,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "Q",
+        "isDown": false,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      }
+    ],
+    [
+      {
+        "rank": "10",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "9",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "3",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "4",
+        "isDown": true,
+        "suit": "spades",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "Q",
+        "isDown": true,
+        "suit": "spades",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "K",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 1,
+        "color": "black",
+        "isSelected": false
+      },
+      {
+        "rank": "Q",
+        "isDown": false,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red",
+        "isSelected": false
+      }
+    ],
+    [
+      {
+        "rank": "3",
+        "isDown": true,
+        "suit": "spades",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "7",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "10",
+        "isDown": true,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "4",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "K",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "K",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "6",
+        "isDown": false,
+        "suit": "spades",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "5",
+        "isDown": false,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red",
+        "isSelected": false
+      }
+    ],
+    [
+      {
+        "rank": "7",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "5",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "A",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "7",
+        "isDown": true,
+        "suit": "spades",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "8",
+        "isDown": true,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "10",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "10",
+        "isDown": true,
+        "suit": "spades",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "7",
+        "isDown": true,
+        "suit": "heart",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "8",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "3",
+        "isDown": true,
+        "suit": "diamond",
+        "deck": 1,
+        "color": "red"
+      },
+      {
+        "rank": "5",
+        "isDown": true,
+        "suit": "spades",
+        "deck": 1,
+        "color": "black"
+      },
+      {
+        "rank": "2",
+        "isDown": true,
+        "suit": "clubs",
+        "deck": 1,
+        "color": "black"
+      }
+    ]
+  ]
 }
