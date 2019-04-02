@@ -73,14 +73,11 @@ export const checkPile = function(pile) {
     return processRank(card.rank);
   });
   var value = false;
-  ranks.forEach(rank => {
-    var checkArray = [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
-
-    if (isEqual(checkArray, ranks.slice(ranks.indexOf(rank)))) {
-      console.log("faad veere faad");
-
-      value = ranks.indexOf(rank);
-    }
-  });
+  const checkArray = [13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+  console.log(checkArray, ranks.slice(-13))
+  if( isEqual(checkArray, ranks.slice(-13))) {
+    console.log("faad veere faad");    
+    value = ranks.length -13;
+  };
   return value;
 };
