@@ -1,6 +1,6 @@
 <template>
-  <SpiderSolitaire gameMode="1"></SpiderSolitaire>
-  <!-- <KlondikeSolitaire></KlondikeSolitaire> -->
+  <!-- <SpiderSolitaire gameMode="1"></SpiderSolitaire> -->
+  <KlondikeSolitaire></KlondikeSolitaire>
 </template>
 
 <script>
