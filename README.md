@@ -1,7 +1,10 @@
 <h1 align="center">VueSolitaire</h1>
 
 <p align="center">
+
 <img src="https://img.shields.io/badge/made%20by-silentlad-blue.svg" >
+
+<img src="https://img.shields.io/badge/vue-2.2.4-green.svg">
 
 <img src="https://beerpay.io/silent-lad/VueSolitaire/badge.svg?style=flat">
 
