@@ -1,6 +1,8 @@
 # VueSolitaire
 
-[LIVE Demo](https://solitairevue.firebaseapp.com)
+**[LIVE Demo](https://solitairevue.firebaseapp.com)**
+
+<img src="./readme_images/h2.png" width="100%">
 
 ## Description
 
