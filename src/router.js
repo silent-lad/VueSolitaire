@@ -2,6 +2,8 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import App from "./App.vue";
+
+import Menu from "./views/Menu.vue";
 import Spider from "./views/Spider.vue";
 import Klondike from "./views/Klondike.vue";
 
@@ -17,6 +19,11 @@ let router = new Router({
       children: [
         {
           path: "/",
+          name: "Menu",
+          component: Menu
+        },
+        {
+          path: "/spider/1",
           name: "Spider",
           component: Spider,
           props: {

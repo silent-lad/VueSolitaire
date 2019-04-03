@@ -17,12 +17,12 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 
 - Click on the card or card pile you want to move .The pile turns to blue.
 
-<img src="./1.png" width="100%">
+<img src="./readme_images/1.png" width="100%">
 
 - Click on the
   destination card and if the move is legal the cards will stack below the target.
 
-<img src="./2.png" width="100%">
+<img src="./readme_images/2.png" width="100%">
 
 - Click the pile on the lower-right corner for extra cards.
 
@@ -32,7 +32,7 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 
 - Each and every card is 100% css except for the SVG of the suit in the center ,which is made by illustrator tool.
 
-  <img src="./4.png" width="30%">
+  <img src="./readme_images/4.png" width="30%">
 
 ## Future scope
 
@@ -44,14 +44,14 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 
 ## [**Klondike** - solitairevue.firebaseapp.com/klondike](https://solitairevue.firebaseapp.com/klondike)
 
-<img src="./3.png" width="50%">
+<img src="./readme_images/3.png" width="50%">
 
 ## [**Spider 4 Suit** - solitairevue.firebaseapp.com/spider/2](https://solitairevue.firebaseapp.com/spider/2)
 
-<img src="./5.png" width="50%">
+<img src="./readme_images/5.png" width="50%">
 
 ## [**Spider 1 Suit** - solitairevue.firebaseapp.com/](https://solitairevue.firebaseapp.com/)
 
-<img src="./1.png" width="50%">
+<img src="./readme_images/1.png" width="50%">
 
 ### Contributions are Welcome
