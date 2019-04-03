@@ -34,14 +34,8 @@ Solitaire implemented by scratch on vue.js. It contains 3 types of solitaire nam
 ## How to play
 
 - Click on the card or card pile you want to move .The pile turns to blue.
-
-  <img src="./readme_assets/1.png" width="80%">
-
 - Click on the
   destination card and if the move is legal the cards will stack below the target.
-
-  <img src="./readme_assets/2.png" width="80%">
-
 - Click the pile on the lower-right corner for extra cards.
 
 ## About the project.
@@ -50,33 +44,34 @@ Solitaire implemented by scratch on vue.js. It contains 3 types of solitaire nam
 
 - Each and every card is 100% css except for the SVG of the suit in the center ,which is made by illustrator tool.
 
-  <img src="./readme_assets/4.png" width="30%">
+  <p align="center"><img  src="./readme_assets/4.png" width="30%"></p>
 
 ### 3 mode menu
 
 Choose from 3 variants of solitaire form the main menu
 
-<img src="./readme_assets/menu.png" width="70%">
-
-## Future scope
-
-- Make it drag and drop compliable.
-- Add winning animation.
-- Make klondike one better.
+<p align="center"><img  src="./readme_assets/menu.png" width="70%"></p>
 
 # Variants
 
 ## **Klondike**
 
-<img src="./readme_assets/3.png" width="50%">
+<p align="center">
+<img  src="./readme_assets/3.png" width="80%">
+</p>
+<!-- <img src="./readme_assets/3.png" width="50%"> -->
 
 ## **Spider 4 Suit**
 
-<img src="./readme_assets/5.png" width="50%">
+<p align="center">
+<img  src="./readme_assets/5.png" width="80%">
+</p>
 
 ## **Spider 1 Suit**
 
-<img src="./readme_assets/1.png" width="50%">
+<p align="center">
+<img  src="./readme_assets/1.png" width="80%">
+</p>
 
 ## Project setup
 
@@ -84,6 +79,12 @@ Choose from 3 variants of solitaire form the main menu
 npm install
 npm run serve
 ```
+
+## Future scope
+
+- Make it drag and drop compliable.
+- Add winning animation.
+- Make klondike one better.
 
 ## Support on Beerpay
 
