@@ -6,6 +6,8 @@
 
 <img src="https://img.shields.io/badge/vue-2.2.4-green.svg">
 
+<img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103" >
+
 <img src="https://beerpay.io/silent-lad/VueSolitaire/badge.svg?style=flat">
 
 <img src="https://img.shields.io/github/stars/silent-lad/VueSolitaire.svg?style=flat">
