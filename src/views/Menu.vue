@@ -1,28 +1,35 @@
 <template>
   <div class="page_wrapper">
-    <h1>
-      VueSolitaire
-    </h1>
+    <div class="heading">
+      <a href="http://github.com/silent-lad/VueSolitaire"
+        ><img src="../assets/sl.png" alt="silentlad" class="logo"
+      /></a>
+
+      <h1>
+        VueSolitaire
+      </h1>
+    </div>
+
     <div class="menu_wrapper">
       <router-link to="/klondike">
         <div class="option">
           <img src="../assets/images/3.png" alt="" srcset="" />
 
-          <p>Klondike</p>
+          <p>Klondike Solitaire</p>
         </div>
       </router-link>
 
       <router-link to="/spider/1">
         <div class="option larger">
           <img src="../assets/images/1.png" alt="" srcset="" />
-          <p>Spider [1 Suit]</p>
+          <p>Spider Solitaire</p>
         </div>
       </router-link>
 
       <router-link to="/spider/2">
         <div class="option">
           <img src="../assets/images/5.png" alt="" srcset="" />
-          <p>Spider [2 Suit]</p>
+          <p>Spider Solitaire [2 Suit]</p>
         </div>
       </router-link>
     </div>
@@ -33,12 +40,21 @@ export default {};
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css?family=Pacifico");
+.logo {
+  margin: 1% 0 0 0;
+  height: 70px;
+  padding: 5px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px 10px black;
+}
 h1 {
-  margin: 1em 0 0.5em 0;
-  color: #000000;
-  font-weight: 900;
-  font-family: "Georgia", sans-serif;
-  font-size: 40px;
+  margin: 0 0 0 0;
+  color: rgb(34, 34, 32);
+  font-weight: 400;
+  font-family: "Pacifico", cursive;
+  font-size: 50px;
   text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.548);
 }
 .page_wrapper {
@@ -73,7 +89,7 @@ h1 {
 
 .option {
   position: relative;
-  top: 15vh;
+  top: 10vh;
   background: rgb(34, 34, 32);
   border-radius: 10px;
   width: 25vw;
@@ -89,8 +105,8 @@ h1 {
 .option:hover {
   transition: all 0.3s;
   transform: scale(1.2, 1.2);
-  border: 1px solid blue;
-  box-shadow: 5px 5px 10px blue;
+  border: 3px solid firebrick;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.8);
 }
 .option:hover p {
   color: red;
@@ -103,12 +119,15 @@ h1 {
 }
 
 @media screen and (max-width: 786px) {
+  h1 {
+    font-size: 20px;
+  }
   .option {
     background: rgb(34, 34, 32);
     padding: 4%;
     height: auto;
     position: relative;
-    top: 20vh;
+    top: 10vh;
     text-align: center;
   }
   .option p {

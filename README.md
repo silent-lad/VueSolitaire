@@ -17,12 +17,12 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 
 - Click on the card or card pile you want to move .The pile turns to blue.
 
-<img src="./readme_images/1.png" width="100%">
+<img src="./readme_images/1.png" width="80%">
 
 - Click on the
   destination card and if the move is legal the cards will stack below the target.
 
-<img src="./readme_images/2.png" width="100%">
+<img src="./readme_images/2.png" width="80%">
 
 - Click the pile on the lower-right corner for extra cards.
 
@@ -33,6 +33,12 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 - Each and every card is 100% css except for the SVG of the suit in the center ,which is made by illustrator tool.
 
   <img src="./readme_images/4.png" width="30%">
+
+### 3 mode menu
+
+Choose from 3 variants of solitaire form the main menu
+
+<img src="./readme_images/menu.png" width="70%">
 
 ## Future scope
 
