@@ -2,7 +2,7 @@
 
 **[LIVE Demo](https://solitairevue.firebaseapp.com)**
 
-<img src="./readme_images/h2.png" width="100%">
+<img src="./readme_assets/h2.png" width="100%">
 
 ## Description
 
@@ -16,12 +16,12 @@ Solitaire implemented by scratch on vue.js. It contains 3 types of solitaire nam
 
 - Click on the card or card pile you want to move .The pile turns to blue.
 
-  <img src="./readme_images/1.png" width="80%">
+  <img src="./readme_assets/1.png" width="80%">
 
 - Click on the
   destination card and if the move is legal the cards will stack below the target.
 
-  <img src="./readme_images/2.png" width="80%">
+  <img src="./readme_assets/2.png" width="80%">
 
 - Click the pile on the lower-right corner for extra cards.
 
@@ -31,13 +31,13 @@ Solitaire implemented by scratch on vue.js. It contains 3 types of solitaire nam
 
 - Each and every card is 100% css except for the SVG of the suit in the center ,which is made by illustrator tool.
 
-  <img src="./readme_images/4.png" width="30%">
+  <img src="./readme_assets/4.png" width="30%">
 
 ### 3 mode menu
 
 Choose from 3 variants of solitaire form the main menu
 
-<img src="./readme_images/menu.png" width="70%">
+<img src="./readme_assets/menu.png" width="70%">
 
 ## Future scope
 
@@ -49,15 +49,15 @@ Choose from 3 variants of solitaire form the main menu
 
 ## **Klondike**
 
-<img src="./readme_images/3.png" width="50%">
+<img src="./readme_assets/3.png" width="50%">
 
 ## **Spider 4 Suit**
 
-<img src="./readme_images/5.png" width="50%">
+<img src="./readme_assets/5.png" width="50%">
 
 ## **Spider 1 Suit**
 
-<img src="./readme_images/1.png" width="50%">
+<img src="./readme_assets/1.png" width="50%">
 
 ## Project setup
 
