@@ -1,6 +1,6 @@
-<h1 style="text-align:center;font-size:40px;">VueSolitaire</h1>
+<h1 align="center">VueSolitaire</h1>
 
-<div style="text-align:center">
+<p align="center">
 <img src="https://img.shields.io/badge/made%20by-silentlad-blue.svg" >
 
 <img src="https://beerpay.io/silent-lad/VueSolitaire/badge.svg?style=flat">
@@ -12,11 +12,11 @@
 <img src="https://img.shields.io/github/issues/silent-lad/VueSolitaire.svg">
 
 <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat">
-</div>
-
-**[LIVE Demo](https://solitairevue.firebaseapp.com)**
+</p>
 
 <img src="./readme_assets/h2.png" width="100%">
+
+<h2 align="center"><a  href="https://solitairevue.firebaseapp.com">Live Demo</a></h2>
 
 ## Description
 
@@ -81,6 +81,7 @@ npm run serve
 ```
 
 ## Support on Beerpay
+
 Hey dude! Help me out for a couple of :beers:!
 
-[![Beerpay](https://beerpay.io/silent-lad/VueSolitaire/badge.svg?style=beer-square)](https://beerpay.io/silent-lad/VueSolitaire)  [![Beerpay](https://beerpay.io/silent-lad/VueSolitaire/make-wish.svg?style=flat-square)](https://beerpay.io/silent-lad/VueSolitaire?focus=wish)
+[![Beerpay](https://beerpay.io/silent-lad/VueSolitaire/badge.svg?style=beer-square)](https://beerpay.io/silent-lad/VueSolitaire) [![Beerpay](https://beerpay.io/silent-lad/VueSolitaire/make-wish.svg?style=flat-square)](https://beerpay.io/silent-lad/VueSolitaire?focus=wish)
