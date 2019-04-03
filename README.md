@@ -42,15 +42,15 @@ This is a simple 1 suit (spades) spider solitaire which was made famousby micros
 
 # Variants
 
-## [**Klondike** - solitairevue.firebaseapp.com/klondike](https://solitairevue.firebaseapp.com/klondike)
+## **Klondike**
 
 <img src="./readme_images/3.png" width="50%">
 
-## [**Spider 4 Suit** - solitairevue.firebaseapp.com/spider/2](https://solitairevue.firebaseapp.com/spider/2)
+## **Spider 4 Suit**
 
 <img src="./readme_images/5.png" width="50%">
 
-## [**Spider 1 Suit** - solitairevue.firebaseapp.com/](https://solitairevue.firebaseapp.com/)
+## **Spider 1 Suit**
 
 <img src="./readme_images/1.png" width="50%">
 

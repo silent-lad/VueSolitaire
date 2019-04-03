@@ -13,7 +13,7 @@
       </router-link>
 
       <router-link to="/spider/1">
-        <div class="option">
+        <div class="option larger">
           <img src="../assets/images/1.png" alt="" srcset="" />
           <p>Spider [1 Suit]</p>
         </div>
@@ -80,13 +80,15 @@ h1 {
   height: 50vh;
   -webkit-box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
   box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
-  transform: scale(1, 1);
   padding: 4%;
+}
+.larger {
+  transform: scale(1.1, 1.1);
 }
 
 .option:hover {
   transition: all 0.3s;
-  transform: scale(1.1, 1.1);
+  transform: scale(1.2, 1.2);
   border: 1px solid blue;
   box-shadow: 5px 5px 10px blue;
 }
