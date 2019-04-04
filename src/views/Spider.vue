@@ -111,7 +111,21 @@ export default {
           this.playSound(true);
         }
       });
+      this.decks.forEach(deck => {
+        this.isCompleteHand(deck);
+      });
       this.$forceUpdate();
+    },
+    isCompleteHand: function(deck) {
+      var pileChecker = this.checkPile(deck);
+      console.log(pileChecker, " pile");
+      if (typeof pileChecker == "number") {
+        deck.splice(pileChecker);
+        this.playSound();
+
+        this.handComplete();
+        if (deck.length != 0) deck[deck.length - 1].isDown = false;
+      }
     },
     selectCard: function(cardSelected, deck, holder) {
       this.playSound();
@@ -124,7 +138,7 @@ export default {
             movedCards.forEach(newCard => {
               deck.push(newCard);
             });
-            if (deck.lenght != 0) {
+            if (deck.length != 0) {
               if (
                 this.selectedDeck[this.selectedDeck.length - 1].isDown == true
               ) {
@@ -175,17 +189,7 @@ export default {
                 this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
               }
             } catch (e) {}
-
-            var pileChecker = this.checkPile(deck);
-            console.log(pileChecker, " pile");
-
-            if (typeof pileChecker == "number") {
-              deck.splice(pileChecker);
-              this.playSound();
-
-              this.handComplete();
-              if (deck.length != 0) deck[deck.length - 1].isDown = false;
-            }
+            this.isCompleteHand(deck);
             this.removeSelection();
           } else {
             this.removeSelection();
