@@ -49,7 +49,11 @@ export const checkMoveSpider = function(dropTarget, deck, selectedCard) {
     dropTarget.suit == selectedCard.suit &&
     processRank(dropTarget.rank) - processRank(selectedCard.rank) == 1
   ) {
-    return true;
+    if (deck.indexOf(dropTarget) == deck.length - 1) {
+      return true;
+    } else {
+      return false;
+    }
   } else {
     return false;
   }

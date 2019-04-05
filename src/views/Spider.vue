@@ -181,7 +181,6 @@ export default {
             movedCards.forEach(newCard => {
               deck.push(newCard);
             });
-
             try {
               if (
                 this.selectedDeck[this.selectedDeck.length - 1].isDown == true

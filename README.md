@@ -33,9 +33,12 @@ Solitaire implemented by scratch on vue.js. It contains 3 types of solitaire nam
 
 ## How to play
 
-- Click on the card or card pile you want to move .The pile turns to blue.
+- **Click** on the card or card pile you want to move .The pile turns to **blue**.
+  <p align="center"><img  src="./readme_assets/s2.png" width="30%"></p>
 - Click on the
-  destination card and if the move is legal the cards will stack below the target.
+  destination card and if the move is legal the cards will
+  stack below the target.
+  <p align="center"><img  src="./readme_assets/s3.png" width="30%"></p>
 - Click the pile on the lower-right corner for extra cards.
 
 ## About the project.

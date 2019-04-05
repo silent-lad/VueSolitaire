@@ -17,7 +17,9 @@
         <div
           style="position:absolute;top:-10px;left:16%;"
           class="card_holder card "
-          @click="selectCard(dealtCards[dealtCards.length - 1], dealtCards)"
+          @click="
+            selectCard(dealtCards[dealtCards.length - 1], dealtCards, 'dealing')
+          "
         >
           <Card
             v-if="dealtCards.length != 0"
@@ -53,10 +55,10 @@
             v-if="deck.length == 0"
             @click.native="selectCard('', deck, 'holder')"
           ></Holder>
-          <transition-group name="list" tag="div">
+          <transition-group name="list2" tag="div">
             <Card
               v-for="card in deck"
-              :key="card.rank + card.suit"
+              :key="card.rank + card.suit + card.isDown"
               :card="card"
               :isSelected="card.isSelected"
               @click.native="selectCard(card, deck)"
@@ -145,12 +147,14 @@ export default {
       this.$forceUpdate();
     },
     refillDealingCards: function(params) {
-      this.decks[7] = this.dealtCards;
+      this.decks[7] = this.dealtCards.reverse();
       this.dealtCards = [];
     },
     selectCard: function(cardSelected, deck, type) {
       this.playSound();
-      console.log(1);
+      if (type == "dealing" && this.selectedCard != "") {
+        return;
+      }
 
       if (type == "foundation" && this.selectedCard) {
         console.log("asaksdn");
@@ -165,15 +169,17 @@ export default {
             console.log("akhri2");
             this.foundation[deck] = this.selectedCard;
             this.selectedDeck.pop();
-            if (
-              this.selectedDeck[this.selectedDeck.length - 1].isDown == true
-            ) {
-              console.log("skfdjljdsfljbsdlfjbljb");
-
-              this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-            } else {
-              console.log("omg");
-            }
+            try {
+              if (
+                this.selectedDeck[this.selectedDeck.length - 1].isDown == true
+              ) {
+                console.log("skfdjljdsfljbsdlfjbljb");
+                this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
+                this.$forceUpdate();
+              } else {
+                console.log("omg");
+              }
+            } catch (e) {}
             // cardSelected = this.selectedCard;
           }
           this.removeSelection();
@@ -196,6 +202,7 @@ export default {
                 this.selectedDeck[this.selectedDeck.length - 1].isDown == true
               ) {
                 this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
+                this.$forceUpdate();
               }
             }
 
@@ -238,15 +245,17 @@ export default {
             movedCards.forEach(newCard => {
               deck.push(newCard);
             });
-            if (
-              this.selectedDeck[this.selectedDeck.length - 1].isDown == true
-            ) {
-              console.log("skfdjljdsfljbsdlfjbljb");
-
-              this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-            } else {
-              console.log("omg");
-            }
+            try {
+              if (
+                this.selectedDeck[this.selectedDeck.length - 1].isDown == true
+              ) {
+                console.log("skfdjljdsfljbsdlfjbljb");
+                this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
+                this.$forceUpdate();
+              } else {
+                console.log("omg");
+              }
+            } catch (e) {}
             console.log(this.selectedDeck[this.selectedDeck.length - 1].isDown);
             this.$forceUpdate();
             console.log("sdkjfa");
@@ -371,6 +380,19 @@ export default {
   .main_table {
     display: none;
   }
+}
+
+.list2-enter {
+  opacity: 0;
+}
+.list2-enter-to {
+  opacity: 1;
+}
+.list2-leave {
+  opacity: 1;
+}
+.list2-leave-to {
+  opacity: 0;
 }
 /* @media screen and (orientation:landscape) { … } */
 </style>
