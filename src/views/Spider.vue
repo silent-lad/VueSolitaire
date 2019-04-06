@@ -19,13 +19,25 @@
           @click.native="selectCard('', deck, true)"
         ></Holder>
         <transition-group name="list" tag="div">
-          <Card
+          <div
             v-for="card in deck"
             :key="card.rank + card.deck + card.suit"
-            :card="card"
-            :isSelected="card.isSelected"
-            @click.native="selectCard(card, deck)"
-          ></Card>
+            :ref="card.rank + card.deck + card.suit"
+            class="card_wrapper"
+            @dragstart="
+              init($event);
+              selectCard(card, deck);
+            "
+            @drag="test($event, card)"
+            @dragend="drop($event, card)"
+            @dragenter="dragEnter($event, card, deck)"
+          >
+            <Card
+              :card="card"
+              :isSelected="card.isSelected"
+              @click.native="selectCard(card, deck)"
+            ></Card>
+          </div>
         </transition-group>
       </div>
       <div
@@ -68,7 +80,8 @@ export default {
       selectedArray: [],
       completedHands: 0,
       flip,
-      shuffle2
+      shuffle2,
+      origin
     };
   },
   methods: {
@@ -78,6 +91,80 @@ export default {
     processRank,
     checkMoveSpider,
     isMovable,
+    init: function(e) {
+      this.origin = {
+        x: e.pageX,
+        y: e.pageY
+      };
+      e.dataTransfer.setDragImage(new Image("0", "0"), -10, -10);
+      this.highlightedCard = "";
+      this.highlightedDeck = "";
+    },
+    test: function(e, card) {
+      // console.log(this.$refs);
+      this.selectedArray.forEach(card => {
+        var ref = `${card.rank + card.deck + card.suit}`;
+        var c = this.$refs[ref][0].children[0];
+        var x = e.pageX - this.origin.x;
+        var y = e.pageY - this.origin.y;
+        var css =
+          "z-index:9999;pointer-events: none; transform: scale(1.05, 1.05) rotateX(0deg) translate3d(" +
+          x +
+          "px, " +
+          y +
+          "px, 0px);";
+        c.style.cssText = css;
+      });
+      console.log();
+    },
+    drop: function(e, card) {
+      console.log(e, card);
+      if (this.highlightedCard != "") {
+      }
+      this.selectedArray.forEach(card => {
+        var ref = `${card.rank + card.deck + card.suit}`;
+        var c = this.$refs[ref][0].children[0];
+        var x = e.pageX - this.origin.x;
+        var y = e.pageY - this.origin.y;
+        var css =
+          "z-index:0; transform: scale(1, 1) rotateX(0deg) translate3d(0px,0px, 0px);";
+        c.style.cssText = css;
+      });
+      if (
+        checkMoveSpider(
+          this.highlightedCard,
+          this.highlightedDeck,
+          this.selectedCard
+        )
+      ) {
+        if (isMovable(this.selectedCard, this.selectedDeck)) {
+          var movedCards = this.selectedDeck.splice(
+            this.selectedDeck.indexOf(this.selectedCard)
+          );
+          movedCards.forEach(newCard => {
+            this.highlightedDeck.push(newCard);
+          });
+          try {
+            if (
+              this.selectedDeck[this.selectedDeck.length - 1].isDown == true
+            ) {
+              this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
+            }
+          } catch (e) {}
+          this.isCompleteHand(this.highlightedDeck);
+          this.removeSelection();
+        } else {
+          this.removeSelection();
+        }
+      } else {
+        this.removeSelection();
+      }
+      // this.removeSelection();
+    },
+    dragEnter: function(e, card, deck) {
+      this.highlightedCard = card;
+      this.highlightedDeck = deck;
+    },
     gameOver: function() {
       console.log("GameOver");
     },
@@ -128,7 +215,7 @@ export default {
       }
     },
     selectCard: function(cardSelected, deck, holder) {
-      this.playSound();
+      // this.playSound();
       if (holder && this.selectedCard) {
         if (this.selectedCard.rank == "K") {
           if (isMovable(this.selectedCard, this.selectedDeck)) {
