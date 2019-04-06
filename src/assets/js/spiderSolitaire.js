@@ -84,3 +84,17 @@ export const checkPile = function(pile) {
   }
   return value;
 };
+
+export const moveCards = function(toDeck, fromDeck, fromCard) {
+  var movedCards = fromDeck.splice(fromDeck.indexOf(fromCard));
+  movedCards.forEach(newCard => {
+    toDeck.push(newCard);
+  });
+  try {
+    if (fromDeck[fromDeck.length - 1].isDown == true) {
+      fromDeck[fromDeck.length - 1].isDown = false;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};

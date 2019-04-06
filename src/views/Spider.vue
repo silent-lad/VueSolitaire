@@ -17,6 +17,7 @@
         <Holder
           v-if="deck.length == 0"
           @click.native="selectCard('', deck, true)"
+          @dragenter.native="dragEnter($event, '', deck)"
         ></Holder>
         <transition-group name="list" tag="div">
           <div
@@ -24,10 +25,7 @@
             :key="card.rank + card.deck + card.suit"
             :ref="card.rank + card.deck + card.suit"
             class="card_wrapper"
-            @dragstart="
-              init($event);
-              selectCard(card, deck);
-            "
+            @dragstart="dragInit($event, card, deck)"
             @drag="test($event, card)"
             @dragend="drop($event, card)"
             @dragenter="dragEnter($event, card, deck)"
@@ -58,7 +56,8 @@ import {
   processRank,
   checkPile,
   checkMoveSpider,
-  isMovable
+  isMovable,
+  moveCards
 } from "../assets/js/spiderSolitaire.js";
 import { normalInit } from "../assets/js/normalSolitaire.js";
 import { setTimeout } from "timers";
@@ -91,17 +90,17 @@ export default {
     processRank,
     checkMoveSpider,
     isMovable,
-    init: function(e) {
+    moveCards,
+    dragInit: function(e, card, deck) {
       this.origin = {
         x: e.pageX,
         y: e.pageY
       };
       e.dataTransfer.setDragImage(new Image("0", "0"), -10, -10);
-      this.highlightedCard = "";
-      this.highlightedDeck = "";
+      this.removeSelection();
+      this.selectCard(card, deck);
     },
     test: function(e, card) {
-      // console.log(this.$refs);
       this.selectedArray.forEach(card => {
         var ref = `${card.rank + card.deck + card.suit}`;
         var c = this.$refs[ref][0].children[0];
@@ -115,11 +114,23 @@ export default {
           "px, 0px);";
         c.style.cssText = css;
       });
-      console.log();
     },
     drop: function(e, card) {
-      console.log(e, card);
-      if (this.highlightedCard != "") {
+      if (this.highlightedCard == "") {
+        if (card.rank == "K") {
+          if (isMovable(this.selectedCard, this.selectedDeck)) {
+            this.moveCards(
+              this.highlightedDeck,
+              this.selectedDeck,
+              this.selectedCard
+            );
+            this.isCompleteHand(this.highlightedDeck);
+            this.removeSelection();
+            this.playSound();
+          } else {
+            this.removeSelection();
+          }
+        }
       }
       this.selectedArray.forEach(card => {
         var ref = `${card.rank + card.deck + card.suit}`;
@@ -127,7 +138,7 @@ export default {
         var x = e.pageX - this.origin.x;
         var y = e.pageY - this.origin.y;
         var css =
-          "z-index:0; transform: scale(1, 1) rotateX(0deg) translate3d(0px,0px, 0px);";
+          "z-index:0;pointer-events:auto; transform: scale(1, 1) rotateX(0deg) translate3d(0px,0px, 0px);";
         c.style.cssText = css;
       });
       if (
@@ -138,28 +149,20 @@ export default {
         )
       ) {
         if (isMovable(this.selectedCard, this.selectedDeck)) {
-          var movedCards = this.selectedDeck.splice(
-            this.selectedDeck.indexOf(this.selectedCard)
+          this.moveCards(
+            this.highlightedDeck,
+            this.selectedDeck,
+            this.selectedCard
           );
-          movedCards.forEach(newCard => {
-            this.highlightedDeck.push(newCard);
-          });
-          try {
-            if (
-              this.selectedDeck[this.selectedDeck.length - 1].isDown == true
-            ) {
-              this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-            }
-          } catch (e) {}
           this.isCompleteHand(this.highlightedDeck);
           this.removeSelection();
+          this.playSound();
         } else {
           this.removeSelection();
         }
       } else {
         this.removeSelection();
       }
-      // this.removeSelection();
     },
     dragEnter: function(e, card, deck) {
       this.highlightedCard = card;
@@ -184,6 +187,8 @@ export default {
         this.selectedCard.isSelected = false;
         this.selectedCard = "";
         this.selectedDeck = "";
+        this.highlightedCard = "";
+        this.highlightedDeck = "";
         this.$forceUpdate();
       } else {
         return;
@@ -205,7 +210,6 @@ export default {
     },
     isCompleteHand: function(deck) {
       var pileChecker = this.checkPile(deck);
-      console.log(pileChecker, " pile");
       if (typeof pileChecker == "number") {
         deck.splice(pileChecker);
         this.playSound();
@@ -215,23 +219,12 @@ export default {
       }
     },
     selectCard: function(cardSelected, deck, holder) {
-      // this.playSound();
+      this.playSound();
       if (holder && this.selectedCard) {
         if (this.selectedCard.rank == "K") {
           if (isMovable(this.selectedCard, this.selectedDeck)) {
-            var movedCards = this.selectedDeck.splice(
-              this.selectedDeck.indexOf(this.selectedCard)
-            );
-            movedCards.forEach(newCard => {
-              deck.push(newCard);
-            });
-            if (deck.length != 0) {
-              if (
-                this.selectedDeck[this.selectedDeck.length - 1].isDown == true
-              ) {
-                this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-              }
-            }
+            this.moveCards(deck, this.selectedDeck, this.selectCard);
+            this.isCompleteHand(deck);
             this.removeSelection();
           } else {
             this.removeSelection();
@@ -242,7 +235,6 @@ export default {
         if (cardSelected.isDown) {
           return;
         }
-
         try {
           this.selectedCard = cardSelected;
           this.selectedDeck = deck;
@@ -262,19 +254,7 @@ export default {
       } else {
         if (checkMoveSpider(cardSelected, deck, this.selectedCard)) {
           if (isMovable(this.selectedCard, this.selectedDeck)) {
-            var movedCards = this.selectedDeck.splice(
-              this.selectedDeck.indexOf(this.selectedCard)
-            );
-            movedCards.forEach(newCard => {
-              deck.push(newCard);
-            });
-            try {
-              if (
-                this.selectedDeck[this.selectedDeck.length - 1].isDown == true
-              ) {
-                this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-              }
-            } catch (e) {}
+            this.moveCards(deck, this.selectedDeck, this.selectedCard);
             this.isCompleteHand(deck);
             this.removeSelection();
           } else {
@@ -392,7 +372,7 @@ body {
 }
 .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
   opacity: 0;
-  transform: translateY(30px);
+  /* transform: translateY(30px); */
 }
 @media screen and (max-width: 780px) {
   body {
