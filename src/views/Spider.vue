@@ -132,15 +132,7 @@ export default {
           }
         }
       }
-      this.selectedArray.forEach(card => {
-        var ref = `${card.rank + card.deck + card.suit}`;
-        var c = this.$refs[ref][0].children[0];
-        var x = e.pageX - this.origin.x;
-        var y = e.pageY - this.origin.y;
-        var css =
-          "z-index:0;pointer-events:auto; transform: scale(1, 1) rotateX(0deg) translate3d(0px,0px, 0px);";
-        c.style.cssText = css;
-      });
+
       if (
         checkMoveSpider(
           this.highlightedCard,
@@ -149,6 +141,12 @@ export default {
         )
       ) {
         if (isMovable(this.selectedCard, this.selectedDeck)) {
+          this.selectedArray.forEach(card => {
+            var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+              .children[0];
+            var css = "z-index:0;pointer-events:auto;display:none;";
+            c.style.cssText = css;
+          });
           this.moveCards(
             this.highlightedDeck,
             this.selectedDeck,
@@ -157,10 +155,23 @@ export default {
           this.isCompleteHand(this.highlightedDeck);
           this.removeSelection();
           this.playSound();
+          return;
         } else {
+          this.selectedArray.forEach(card => {
+            var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+              .children[0];
+            var css = "z-index:0;pointer-events:auto;";
+            c.style.cssText = css;
+          });
           this.removeSelection();
         }
       } else {
+        this.selectedArray.forEach(card => {
+          var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+            .children[0];
+          var css = "z-index:0;pointer-events:auto;";
+          c.style.cssText = css;
+        });
         this.removeSelection();
       }
     },
