@@ -23,6 +23,8 @@
 
 <h2 align="center"><a  href="https://solitairevue.firebaseapp.com">Live Demo</a></h2>
 
+### [Contributions are Welcome](https://github.com/silent-lad/VueSolitaire/edit/master/CONTRIBUTING.md)
+
 ## Description
 
 **NOW WITH DRAG AND DROP**
@@ -34,7 +36,6 @@ Solitaire implemented by scratch on vue.js. It contains 3 types of solitaire nam
 
 **This project is inspired by [AadumKhor](https://github.com/AadumKhor) Go check out his flutter implementation of the same [Here](https://github.com/AadumKhor/Solitaire_Flutter)** .
 
-### Contributions are Welcome
 
 ## How to play
 
