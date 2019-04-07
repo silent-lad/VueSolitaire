@@ -61,6 +61,7 @@
             :key="card.rank + card.suit"
             :card="card"
             :isSelected="card.isSelected"
+            draggable="false"
           ></Card>
         </div>
       </div>
@@ -295,7 +296,6 @@ export default {
     dragEnter: function(e, card, deck) {
       this.highlightedCard = card;
       this.highlightedDeck = deck;
-      console.log(this.highlightedDeck, this.highlightedCard);
     },
     gameOver: function() {
       console.log("GameOver");
@@ -342,29 +342,35 @@ export default {
         this.removeSelection();
         return;
       }
-      if (type == "foundation" && this.selectedCard) {
-        if (
-          this.selectedDeck[this.selectedDeck.length - 1] ==
-            this.selectedCard ||
-          processRank(this.selectedCard) - processRank(cardSelected) == 1
-        ) {
-          if (checkFoundation(cardSelected, this.selectedCard)) {
-            this.foundation[deck] = this.selectedCard;
-            this.selectedDeck.pop();
-            try {
-              if (
-                this.selectedDeck[this.selectedDeck.length - 1].isDown == true
-              ) {
-                this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-                this.$forceUpdate();
-              }
-            } catch (e) {}
+      if (type == "foundation") {
+        if (this.selectedCard) {
+          if (
+            this.selectedDeck[this.selectedDeck.length - 1] ==
+              this.selectedCard ||
+            processRank(this.selectedCard) - processRank(cardSelected) == 1
+          ) {
+            if (checkFoundation(cardSelected, this.selectedCard)) {
+              this.foundation[deck] = this.selectedCard;
+              this.selectedDeck.pop();
+              try {
+                if (
+                  this.selectedDeck[this.selectedDeck.length - 1].isDown == true
+                ) {
+                  this.selectedDeck[
+                    this.selectedDeck.length - 1
+                  ].isDown = false;
+                  this.$forceUpdate();
+                }
+              } catch (e) {}
+            }
+            this.removeSelection();
+            return;
           }
           this.removeSelection();
           return;
+        } else {
+          return;
         }
-        this.removeSelection();
-        return;
       }
       if (type == "holder" && this.selectedCard) {
         if (this.selectedCard.rank == "K") {

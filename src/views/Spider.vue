@@ -235,7 +235,7 @@ export default {
       if (holder && this.selectedCard) {
         if (this.selectedCard.rank == "K") {
           if (isMovable(this.selectedCard, this.selectedDeck)) {
-            this.moveCards(deck, this.selectedDeck, this.selectCard);
+            this.moveCards(deck, this.selectedDeck, this.selectedCard);
             this.isCompleteHand(deck);
             this.removeSelection();
           } else {
