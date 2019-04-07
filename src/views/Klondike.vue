@@ -185,6 +185,21 @@ export default {
         ) {
           this.foundation[this.highlightedDeck] = this.selectedCard;
           this.selectedDeck.pop();
+          this.selectedArray.forEach(card => {
+            if (dealer) {
+              var c = this.$refs[`${card.rank + card.deck + card.suit}`]
+                .children[0];
+            } else {
+              var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+                .children[0];
+            }
+            if (dealer) {
+              var css = "z-index:0;pointer-events:auto;";
+            } else {
+              var css = "z-index:0;pointer-events:auto;display:none;";
+            }
+            c.style.cssText = css;
+          });
           try {
             this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
           } catch (e) {
@@ -204,6 +219,21 @@ export default {
               this.selectedDeck,
               this.selectedCard
             );
+            this.selectedArray.forEach(card => {
+              if (dealer) {
+                var c = this.$refs[`${card.rank + card.deck + card.suit}`]
+                  .children[0];
+              } else {
+                var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+                  .children[0];
+              }
+              if (dealer) {
+                var css = "z-index:0;pointer-events:auto;";
+              } else {
+                var css = "z-index:0;pointer-events:auto;display:none;";
+              }
+              c.style.cssText = css;
+            });
             this.removeSelection();
             this.playSound();
           } else {

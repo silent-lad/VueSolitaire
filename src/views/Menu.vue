@@ -29,7 +29,7 @@
       <router-link to="/spider/2">
         <div class="option">
           <img src="../assets/images/5.png" alt="" srcset="" />
-          <p>Spider Solitaire [2 Suit]</p>
+          <p>Spider Solitaire [4 Suit]</p>
         </div>
       </router-link>
     </div>

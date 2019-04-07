@@ -25,6 +25,11 @@
 
 ## Description
 
+**NOW WITH DRAG AND DROP**
+
+<p align="center">
+<img src="https://media.giphy.com/media/7OWdOQupgCClrZb19P/giphy.gif" width="80%"></p>
+
 Solitaire implemented by scratch on vue.js. It contains 3 types of solitaire namely spider(which was made famous by microsoft back when I was a kid) ,spider 4 suit and klondike. I've learned web development myself without any course or coaching so don't expect too much from the source code xD.
 
 **This project is inspired by [AadumKhor](https://github.com/AadumKhor) Go check out his flutter implementation of the same [Here](https://github.com/AadumKhor/Solitaire_Flutter)** .
@@ -33,13 +38,17 @@ Solitaire implemented by scratch on vue.js. It contains 3 types of solitaire nam
 
 ## How to play
 
+### Drag and Drop [**New** ]:-
+
+- **Drag** the card or the card pile you want to move.
+- **Drop** the dragged card pile on the target and if the move is legal card will move
+
+### Click edition (Mobile version)-
+
 - **Click** on the card or card pile you want to move .The pile turns to **blue**.
-  <p align="center"><img  src="./readme_assets/s2.png" width="30%"></p>
 - Click on the
   destination card and if the move is legal the cards will
   stack below the target.
-  <p align="center"><img  src="./readme_assets/s3.png" width="30%"></p>
-- Click the pile on the lower-right corner for extra cards.
 
 ## About the project.
 
@@ -85,7 +94,6 @@ npm run serve
 
 ## Future scope
 
-- Make it drag and drop compliable.
 - Add winning animation.
 - Make klondike one better.
 
