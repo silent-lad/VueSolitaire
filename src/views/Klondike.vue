@@ -81,7 +81,7 @@
             v-if="deck.length == 0"
             @click.native="selectCard('', deck, 'holder')"
           ></Holder>
-          <transition-group name="list2" tag="div">
+          <transition-group name="list" tag="div">
             <div
               v-for="card in deck"
               :key="card.rank + card.suit + card.isDown"
@@ -445,19 +445,6 @@ export default {
 };
 </script>
 <style>
-.card_stack {
-  position: relative;
-  margin-bottom: -100px;
-}
-.card {
-  box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.5);
-  width: 7vw;
-  height: 140px;
-  border-radius: 4px;
-  border: 1px solid black;
-  padding: 0;
-}
-
 .upper_table {
   display: flex;
   flex-direction: row-reverse;
@@ -480,62 +467,12 @@ export default {
   );
   margin: 0px 0px;
 }
-@media screen and (max-width: 780px) {
-  body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .card {
-    height: 60px;
-  }
-  .card_stack.down {
-    margin-bottom: -55px;
-  }
-  .card_stack {
-    margin-bottom: -45px;
-  }
-  .rank {
-    font-size: 9px;
-    margin-left: 1px;
-  }
-  .rank.bottom {
-    /* position: absolute; */
-    position: relative;
-    top: 17px;
-    left: 3px;
-    text-align: left;
-    /* transform: translate(50%, 50%); */
-    transform: rotate(180deg);
-    /* padding-left: 5px; */
-  }
-  .card_stack.selected {
-    box-shadow: 5px 5px 10px blue;
-    border: 3px solid blue;
-    transform: translate(2px, 2px);
-  }
-}
 @media screen and (orientation: portrait) {
   .main_table {
     display: none;
   }
 }
 
-.list2-enter {
-  opacity: 0;
-}
-.list2-enter-to {
-  opacity: 1;
-}
-.list2-leave {
-  opacity: 1;
-}
-.list2-leave-to {
-  opacity: 0;
-}
 /* @media screen and (orientation:landscape) { … } */
 </style>
 

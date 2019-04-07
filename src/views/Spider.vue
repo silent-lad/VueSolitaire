@@ -302,45 +302,6 @@ export default {
 .mobile_warn {
   display: none;
 }
-.card_stack.down {
-  margin-bottom: -125px;
-}
-.card_stack {
-  transition: all 0.2s linear;
-  position: relative;
-  margin-bottom: -100px;
-}
-.card {
-  box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.5);
-  width: 7vw;
-  height: 140px;
-  border-radius: 4px;
-  border: 1px solid black;
-  padding: 0;
-}
-.card_stack:hover {
-  box-shadow: 4px 4px 10px rgb(247, 210, 0);
-}
-.card_stack.selected {
-  box-shadow: 5px 5px 10px blue;
-  border: 3px solid blue;
-  transform: translateY(20px) scale(1.1);
-}
-.card_deck {
-  border: 2px solid black;
-  border-radius: 10%;
-  width: 8vw;
-  list-style: none;
-  margin-left: none;
-  margin-top: -150%;
-  margin: 5% 0;
-  padding: 0;
-  height: 140px;
-  background: rgb(124, 7, 7);
-}
-/* html {
-  background: green;
-} */
 body {
   background-image: radial-gradient(
     rgba(57, 172, 57, 0.726),
@@ -364,7 +325,6 @@ body {
   );
 }
 .card_holder {
-  /* card length margin */
   margin: 5% 0;
   list-style: none;
   background: rgba(0, 0, 0, 0.3);
@@ -395,34 +355,6 @@ body {
     top: 0;
     left: 0;
   }
-  .card {
-    height: 60px;
-  }
-  .card_stack.down {
-    margin-bottom: -55px;
-  }
-  .card_stack {
-    margin-bottom: -45px;
-  }
-  .rank {
-    font-size: 9px;
-    margin-left: 1px;
-  }
-  .rank.bottom {
-    /* position: absolute; */
-    position: relative;
-    top: 17px;
-    left: 3px;
-    text-align: left;
-    /* transform: translate(50%, 50%); */
-    transform: rotate(180deg);
-    /* padding-left: 5px; */
-  }
-  .card_stack.selected {
-    box-shadow: 5px 5px 10px blue;
-    border: 3px solid blue;
-    transform: translate(2px, 2px);
-  }
 }
 @media screen and (orientation: portrait) {
   .mobile_warn {
@@ -433,7 +365,6 @@ body {
     font-family: "Montserrat", sans-serif;
     -webkit-font-smoothing: antialiased;
     font-size: 12px;
-    /* height: 100px; */
     margin: 1rem;
     position: relative;
     width: 90%;

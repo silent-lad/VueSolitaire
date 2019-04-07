@@ -43,18 +43,21 @@ export default {};
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
 .logo {
   margin: 1% 0 0 0;
-  height: 70px;
+  height: 10vh;
   padding: 5px;
   background: white;
   border-radius: 5px;
   box-shadow: 2px 2px 10px black;
+}
+a {
+  text-decoration: none;
 }
 h1 {
   margin: 0 0 0 0;
   color: rgb(34, 34, 32);
   font-weight: 400;
   font-family: "Pacifico", cursive;
-  font-size: 50px;
+  font-size: 4vw;
   text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.548);
 }
 .page_wrapper {
@@ -75,16 +78,17 @@ h1 {
 }
 .option img {
   transition: all 0.3s;
-  margin: 5%;
-  width: 80%;
+  margin: 5% 5% -2% 5%;
+  width: 19vw;
   padding: 5%;
   border: 2px solid lightblue;
   border-radius: 10px;
+  height: 12vw;
 }
 .option p {
   color: darkred;
   text-align: center;
-  font: 40px Georgia, Times New Roman, serif;
+  font: 3vw Georgia, Times New Roman, serif;
 }
 
 .option {
@@ -93,7 +97,7 @@ h1 {
   background: rgb(34, 34, 32);
   border-radius: 10px;
   width: 25vw;
-  height: 50vh;
+  height: 25vw;
   -webkit-box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
   box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.3);
   padding: 4%;
@@ -118,19 +122,23 @@ h1 {
   border-radius: 10px;
 }
 
-@media screen and (max-width: 786px) {
+@media screen and (max-width: 400px) {
   h1 {
     font-size: 20px;
+  }
+  .option img {
+    height: 7vh;
   }
   .option {
     background: rgb(34, 34, 32);
     padding: 4%;
-    height: auto;
+    height: 15vh;
     position: relative;
     top: 10vh;
     text-align: center;
   }
   .option p {
+    margin: none;
     font-size: 10px;
     color: red;
   }

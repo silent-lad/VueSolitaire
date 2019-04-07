@@ -49,38 +49,46 @@ ul {
   text-decoration: transparent;
 }
 .rank {
-  margin-left: 2px;
+  margin-left: 0.2vw;
+  font-size: 1.4vw;
+  line-height: 1.5vw;
 }
 .rank.bottom {
-  /* position: absolute; */
   position: relative;
-  top: 43px;
+  top: 3.8vw;
   text-align: left;
-  /* transform: translate(50%, 50%); */
   transform: rotate(180deg);
-  padding-left: 5px;
+  margin-right: 0.4vw;
 }
 .card_stack.down {
-  margin-bottom: -125px;
+  margin-bottom: -8.5vw;
 }
 .card.down > .rank {
   visibility: hidden;
 }
 .card_stack {
+  transition: all 0.2s linear;
   position: relative;
-  margin-bottom: -100px;
+  margin-bottom: -7vw;
+}
+.card_stack:hover {
+  box-shadow: 4px 4px 10px rgb(247, 210, 0);
+}
+.card_stack.selected {
+  box-shadow: 5px 5px 10px blue;
+  border: 3px solid blue;
+  transform: translateY(20px) scale(1.1);
 }
 .card {
   box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.5);
   width: 7vw;
-  height: 140px;
-  border-radius: 4px;
+  height: 9.8vw;
+  border-radius: 0.3vw;
   border: 1px solid black;
   padding: 0;
 }
 .heart {
   background: url("../assets/suits/heart.png") rgb(255, 255, 255);
-  font-size: 20px;
   color: red;
   background-repeat: no-repeat;
   background-position: center;
@@ -88,7 +96,6 @@ ul {
 }
 .spades {
   background: url("../assets/suits/spades.png") rgb(255, 255, 255);
-  font-size: 20px;
   color: black;
   background-repeat: no-repeat;
   background-position: center;
@@ -96,7 +103,6 @@ ul {
 }
 .clubs {
   background: url("../assets/suits/clubs.png") rgb(255, 255, 255);
-  font-size: 20px;
   color: black;
   background-repeat: no-repeat;
   background-position: center;
@@ -104,10 +110,16 @@ ul {
 }
 .diamond {
   background: url("../assets/suits/diamond.png") rgb(255, 255, 255);
-  font-size: 20px;
   color: red;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 50%;
+}
+@media screen and (max-width: 780px) {
+  .card_stack.selected {
+    box-shadow: 5px 5px 10px blue;
+    border: 3px solid blue;
+    transform: translate(2px, 2px);
+  }
 }
 </style>
