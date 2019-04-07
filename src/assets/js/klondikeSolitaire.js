@@ -45,10 +45,7 @@ export const klondikeInit = function() {
 
 export const isDroppable = function(dropTarget, selectedCard) {
   if (processRank(dropTarget.rank) - processRank(selectedCard.rank) == 1) {
-    console.log("hihhh");
     if (dropTarget.color != selectedCard.color) {
-      console.log("hi");
-
       return true;
     } else {
       return false;
@@ -78,7 +75,6 @@ export const isMovable = function(card, deck) {
 };
 
 export const checkFoundation = function(foundation, card) {
-  // console.log("hihihihi");
   if (foundation == "" && card.rank == "A") {
     return true;
   }
@@ -86,10 +82,8 @@ export const checkFoundation = function(foundation, card) {
     foundation.suit == card.suit &&
     processRank(card.rank) - processRank(foundation.rank) == 1
   ) {
-    // console.log("hihihihi");
     return true;
   } else {
-    // console.log("hihihihi");
     return false;
   }
 };

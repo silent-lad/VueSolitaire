@@ -16,9 +16,22 @@
         ></div>
         <div
           style="position:absolute;top:-10px;left:16%;"
+          :ref="
+            dealtCards[dealtCards.length - 1].rank +
+              dealtCards[dealtCards.length - 1].deck +
+              dealtCards[dealtCards.length - 1].suit || null
+          "
           class="card_holder card "
           @click="
             selectCard(dealtCards[dealtCards.length - 1], dealtCards, 'dealing')
+          "
+          @dragstart="
+            dragInit($event, dealtCards[dealtCards.length - 1], dealtCards)
+          "
+          @drag="dragCards($event, dealtCards[dealtCards.length - 1], true)"
+          @dragend="drop($event, dealtCards[dealtCards.length - 1])"
+          @dragenter="
+            dragEnter($event, dealtCards[dealtCards.length - 1], dealtCards)
           "
         >
           <Card
@@ -34,6 +47,7 @@
           :key="index"
           id="1"
           @click="selectCard(card, index, 'foundation')"
+          @dragenter="dragEnter($event, card, index)"
         >
           <Holder v-if="card == ''"></Holder>
           <Card
@@ -56,13 +70,22 @@
             @click.native="selectCard('', deck, 'holder')"
           ></Holder>
           <transition-group name="list2" tag="div">
-            <Card
+            <div
               v-for="card in deck"
               :key="card.rank + card.suit + card.isDown"
-              :card="card"
-              :isSelected="card.isSelected"
-              @click.native="selectCard(card, deck)"
-            ></Card>
+              :ref="card.rank + card.deck + card.suit"
+              class="card_wrapper"
+              @dragstart="dragInit($event, card, deck)"
+              @drag="dragCards($event, card)"
+              @dragend="drop($event, card)"
+              @dragenter="dragEnter($event, card, deck)"
+            >
+              <Card
+                :card="card"
+                :isSelected="card.isSelected"
+                @click.native="selectCard(card, deck)"
+              ></Card>
+            </div>
           </transition-group>
         </div>
       </div>
@@ -81,6 +104,7 @@ import {
   isDroppable,
   isMovable
 } from "../assets/js/klondikeSolitaire.js";
+import { moveCards } from "../assets/js/spiderSolitaire.js";
 import flip from "../assets/audio/flip.wav";
 import shuffle2 from "../assets/audio/shuffle2.wav";
 
@@ -100,8 +124,10 @@ export default {
       selectedArray: [],
       completedHands: 0,
       flip,
-      dealtCards: [],
-      shuffle2
+      dealtCards: [{ rank: "", suit: "", deck: "" }],
+      shuffle2,
+      highlightedDeck: "",
+      highlightedCard: ""
     };
   },
   methods: {
@@ -110,6 +136,120 @@ export default {
     checkFoundation,
     isDroppable,
     isMovable,
+    moveCards,
+    dragInit: function(e, card, deck) {
+      this.origin = {
+        x: e.pageX,
+        y: e.pageY
+      };
+      event.dataTransfer.setData("text", "silentlad");
+      e.dataTransfer.setDragImage(new Image("0", "0"), -10, -10);
+      this.removeSelection();
+      this.selectCard(card, deck, "dealing");
+    },
+    dragCards: function(e, card, holder) {
+      if (holder) {
+        var ref = `${card.rank + card.deck + card.suit}`;
+        var c = this.$refs[ref][0].children[0];
+        var x = e.pageX - this.origin.x;
+        var y = e.pageY - this.origin.y;
+        var css =
+          "z-index:9999;pointer-events: none; transform: scale(1.05, 1.05) rotateX(0deg) translate3d(" +
+          x +
+          "px, " +
+          y +
+          "px, 0px);";
+        c.style.cssText = css;
+        return;
+      }
+      this.selectedArray.forEach(card => {
+        var ref = `${card.rank + card.deck + card.suit}`;
+        var c = this.$refs[ref][0].children[0];
+        var x = e.pageX - this.origin.x;
+        var y = e.pageY - this.origin.y;
+        var css =
+          "z-index:9999;pointer-events: none; transform: scale(1.05, 1.05) rotateX(0deg) translate3d(" +
+          x +
+          "px, " +
+          y +
+          "px, 0px);";
+        c.style.cssText = css;
+      });
+    },
+    drop: function(e, card, foundation) {
+      if (typeof this.highlightedDeck == "number") {
+        if (
+          this.checkFoundation(this.highlightedCard, this.selectedCard) &&
+          this.selectedArray.length == 1
+        ) {
+          this.foundation[this.highlightedDeck] = this.selectedCard;
+          this.selectedDeck.pop();
+          try {
+            this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
+          } catch (e) {
+            console.log(e);
+          }
+
+          this.removeSelection();
+          this.$forceUpdate();
+          return;
+        }
+      }
+      if (this.highlightedCard == "") {
+        if (card.rank == "K") {
+          if (isMovable(this.selectedCard, this.selectedDeck)) {
+            this.moveCards(
+              this.highlightedDeck,
+              this.selectedDeck,
+              this.selectedCard
+            );
+            this.removeSelection();
+            this.playSound();
+          } else {
+            this.removeSelection();
+          }
+        }
+      }
+
+      if (isDroppable(this.highlightedCard, this.selectedCard)) {
+        if (isMovable(this.selectedCard, this.selectedDeck)) {
+          this.selectedArray.forEach(card => {
+            var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+              .children[0];
+            var css = "z-index:0;pointer-events:auto;display:none;";
+            c.style.cssText = css;
+          });
+          this.moveCards(
+            this.highlightedDeck,
+            this.selectedDeck,
+            this.selectedCard
+          );
+          this.removeSelection();
+          this.playSound();
+          return;
+        } else {
+          this.selectedArray.forEach(card => {
+            var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+              .children[0];
+            var css = "z-index:0;pointer-events:auto;";
+            c.style.cssText = css;
+          });
+          this.removeSelection();
+        }
+      } else {
+        this.selectedArray.forEach(card => {
+          var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+            .children[0];
+          var css = "z-index:0;pointer-events:auto;";
+          c.style.cssText = css;
+        });
+        this.removeSelection();
+      }
+    },
+    dragEnter: function(e, card, deck) {
+      this.highlightedCard = card;
+      this.highlightedDeck = deck;
+    },
     gameOver: function() {
       console.log("GameOver");
     },
@@ -121,7 +261,6 @@ export default {
       }
     },
     removeSelection: function() {
-      console.log("hig");
       if (this.selectedCard != "") {
         this.selectedArray.forEach(element => {
           element.isSelected = false;
@@ -153,34 +292,26 @@ export default {
     selectCard: function(cardSelected, deck, type) {
       this.playSound();
       if (type == "dealing" && this.selectedCard != "") {
+        this.removeSelection();
         return;
       }
-
       if (type == "foundation" && this.selectedCard) {
-        console.log("asaksdn");
-
         if (
           this.selectedDeck[this.selectedDeck.length - 1] ==
             this.selectedCard ||
           processRank(this.selectedCard) - processRank(cardSelected) == 1
         ) {
-          console.log("akhri");
           if (checkFoundation(cardSelected, this.selectedCard)) {
-            console.log("akhri2");
             this.foundation[deck] = this.selectedCard;
             this.selectedDeck.pop();
             try {
               if (
                 this.selectedDeck[this.selectedDeck.length - 1].isDown == true
               ) {
-                console.log("skfdjljdsfljbsdlfjbljb");
                 this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
                 this.$forceUpdate();
-              } else {
-                console.log("omg");
               }
             } catch (e) {}
-            // cardSelected = this.selectedCard;
           }
           this.removeSelection();
           return;
@@ -191,21 +322,8 @@ export default {
       if (type == "holder" && this.selectedCard) {
         if (this.selectedCard.rank == "K") {
           if (isMovable(this.selectedCard, this.selectedDeck)) {
-            var movedCards = this.selectedDeck.splice(
-              this.selectedDeck.indexOf(this.selectedCard)
-            );
-            movedCards.forEach(newCard => {
-              deck.push(newCard);
-            });
-            if (deck.length != 0) {
-              if (
-                this.selectedDeck[this.selectedDeck.length - 1].isDown == true
-              ) {
-                this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-                this.$forceUpdate();
-              }
-            }
-
+            this.moveCards(deck, this.selectedDeck, this.selectedCard);
+            this.$forceUpdate();
             this.removeSelection();
           } else {
             this.removeSelection();
@@ -213,57 +331,28 @@ export default {
         }
       }
       if (this.selectedCard == "") {
-        console.log(1);
         if (cardSelected.isDown) {
-          console.log(1);
           return;
         }
         this.selectedCard = cardSelected;
         this.selectedDeck = deck;
         this.selectedCard.isSelected = true;
         if (isMovable(this.selectedCard, this.selectedDeck)) {
-          console.log(1);
           this.selectedArray = this.selectedDeck.slice(
             this.selectedDeck.indexOf(this.selectedCard)
           );
-          console.log(1);
           this.selectedArray.forEach(element => {
             element.isSelected = true;
           });
         }
         this.$forceUpdate();
       } else {
-        console.log(2);
-        console.log(isDroppable(cardSelected, this.selectedCard));
         if (isDroppable(cardSelected, this.selectedCard)) {
-          console.log(2);
           if (isMovable(this.selectedCard, this.selectedDeck)) {
-            console.log(2);
-            var movedCards = this.selectedDeck.splice(
-              this.selectedDeck.indexOf(this.selectedCard)
-            );
-            movedCards.forEach(newCard => {
-              deck.push(newCard);
-            });
-            try {
-              if (
-                this.selectedDeck[this.selectedDeck.length - 1].isDown == true
-              ) {
-                console.log("skfdjljdsfljbsdlfjbljb");
-                this.selectedDeck[this.selectedDeck.length - 1].isDown = false;
-                this.$forceUpdate();
-              } else {
-                console.log("omg");
-              }
-            } catch (e) {}
-            console.log(this.selectedDeck[this.selectedDeck.length - 1].isDown);
+            this.moveCards(deck, this.selectedDeck, this.selectedCard);
             this.$forceUpdate();
-            console.log("sdkjfa");
-
             this.removeSelection();
-            console.log("hi", deck);
           } else {
-            console.log(3);
             this.removeSelection();
           }
         } else {

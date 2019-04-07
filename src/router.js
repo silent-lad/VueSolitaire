@@ -14,7 +14,6 @@ let router = new Router({
   routes: [
     {
       path: "/",
-      name: "App",
       component: App,
       children: [
         {
@@ -24,7 +23,7 @@ let router = new Router({
         },
         {
           path: "/spider/1",
-          name: "Spider",
+          name: "Spider1Suit",
           component: Spider,
           props: {
             gameMode: "1"
@@ -32,7 +31,7 @@ let router = new Router({
         },
         {
           path: "/spider/2",
-          name: "Spider",
+          name: "Spider4Suit",
           component: Spider,
           props: {
             gameMode: "2"

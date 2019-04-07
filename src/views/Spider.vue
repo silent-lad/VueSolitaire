@@ -26,7 +26,7 @@
             :ref="card.rank + card.deck + card.suit"
             class="card_wrapper"
             @dragstart="dragInit($event, card, deck)"
-            @drag="test($event, card)"
+            @drag="dragCards($event, card)"
             @dragend="drop($event, card)"
             @dragenter="dragEnter($event, card, deck)"
           >
@@ -96,11 +96,12 @@ export default {
         x: e.pageX,
         y: e.pageY
       };
+      event.dataTransfer.setData("text", "silentlad");
       e.dataTransfer.setDragImage(new Image("0", "0"), -10, -10);
       this.removeSelection();
       this.selectCard(card, deck);
     },
-    test: function(e, card) {
+    dragCards: function(e, card) {
       this.selectedArray.forEach(card => {
         var ref = `${card.rank + card.deck + card.suit}`;
         var c = this.$refs[ref][0].children[0];
