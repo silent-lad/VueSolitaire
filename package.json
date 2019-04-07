@@ -28,5 +28,9 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "licenses": [{
+    "type": "MIT",
+    "url": "https://github.com/silent-lad/VueSolitaire/raw/master/LICENSE"
+  }]
 }
