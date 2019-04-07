@@ -16,29 +16,35 @@
         ></div>
         <div
           style="position:absolute;top:-10px;left:16%;"
-          :ref="
-            dealtCards[dealtCards.length - 1].rank +
-              dealtCards[dealtCards.length - 1].deck +
-              dealtCards[dealtCards.length - 1].suit || null
-          "
           class="card_holder card "
-          @click="
-            selectCard(dealtCards[dealtCards.length - 1], dealtCards, 'dealing')
-          "
-          @dragstart="
-            dragInit($event, dealtCards[dealtCards.length - 1], dealtCards)
-          "
-          @drag="dragCards($event, dealtCards[dealtCards.length - 1], true)"
-          @dragend="drop($event, dealtCards[dealtCards.length - 1])"
-          @dragenter="
-            dragEnter($event, dealtCards[dealtCards.length - 1], dealtCards)
-          "
         >
-          <Card
+          <div
             v-if="dealtCards.length != 0"
-            :card="dealtCards[dealtCards.length - 1]"
-            :isSelected="dealtCards[dealtCards.length - 1].isSelected"
-          ></Card>
+            :ref="
+              dealtCards[dealtCards.length - 1].rank +
+                dealtCards[dealtCards.length - 1].deck +
+                dealtCards[dealtCards.length - 1].suit
+            "
+            class="card_wrapper"
+            @click="
+              selectCard(
+                dealtCards[dealtCards.length - 1],
+                dealtCards,
+                'dealing'
+              )
+            "
+            @dragstart="
+              dragInit($event, dealtCards[dealtCards.length - 1], dealtCards)
+            "
+            @drag="dragCards($event, dealtCards[dealtCards.length - 1], true)"
+            @dragend="drop($event, dealtCards[dealtCards.length - 1], true)"
+          >
+            <Card
+              v-if="dealtCards.length != 0"
+              :card="dealtCards[dealtCards.length - 1]"
+              :isSelected="dealtCards[dealtCards.length - 1].isSelected"
+            ></Card>
+          </div>
         </div>
         <div
           class="card card_holder "
@@ -64,6 +70,11 @@
           v-for="deck in decks.slice(0, 7)"
           :key="decks.indexOf(deck) || 'null'"
           id="1"
+          @dragenter="
+            if (deck.length == 0) {
+              dragEnter($event, '', deck);
+            }
+          "
         >
           <Holder
             v-if="deck.length == 0"
@@ -147,24 +158,14 @@ export default {
       this.removeSelection();
       this.selectCard(card, deck, "dealing");
     },
-    dragCards: function(e, card, holder) {
-      if (holder) {
-        var ref = `${card.rank + card.deck + card.suit}`;
-        var c = this.$refs[ref][0].children[0];
-        var x = e.pageX - this.origin.x;
-        var y = e.pageY - this.origin.y;
-        var css =
-          "z-index:9999;pointer-events: none; transform: scale(1.05, 1.05) rotateX(0deg) translate3d(" +
-          x +
-          "px, " +
-          y +
-          "px, 0px);";
-        c.style.cssText = css;
-        return;
-      }
+    dragCards: function(e, card, dealer) {
       this.selectedArray.forEach(card => {
         var ref = `${card.rank + card.deck + card.suit}`;
-        var c = this.$refs[ref][0].children[0];
+        if (dealer) {
+          var c = this.$refs[ref].children[0];
+        } else {
+          var c = this.$refs[ref][0].children[0];
+        }
         var x = e.pageX - this.origin.x;
         var y = e.pageY - this.origin.y;
         var css =
@@ -176,7 +177,7 @@ export default {
         c.style.cssText = css;
       });
     },
-    drop: function(e, card, foundation) {
+    drop: function(e, card, dealer) {
       if (typeof this.highlightedDeck == "number") {
         if (
           this.checkFoundation(this.highlightedCard, this.selectedCard) &&
@@ -214,9 +215,19 @@ export default {
       if (isDroppable(this.highlightedCard, this.selectedCard)) {
         if (isMovable(this.selectedCard, this.selectedDeck)) {
           this.selectedArray.forEach(card => {
-            var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
-              .children[0];
-            var css = "z-index:0;pointer-events:auto;display:none;";
+            if (dealer) {
+              var c = this.$refs[`${card.rank + card.deck + card.suit}`]
+                .children[0];
+            } else {
+              var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+                .children[0];
+            }
+            if (dealer) {
+              var css = "z-index:0;pointer-events:auto;";
+            } else {
+              var css = "z-index:0;pointer-events:auto;display:none;";
+            }
+
             c.style.cssText = css;
           });
           this.moveCards(
@@ -238,8 +249,13 @@ export default {
         }
       } else {
         this.selectedArray.forEach(card => {
-          var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
-            .children[0];
+          if (dealer) {
+            var c = this.$refs[`${card.rank + card.deck + card.suit}`]
+              .children[0];
+          } else {
+            var c = this.$refs[`${card.rank + card.deck + card.suit}`][0]
+              .children[0];
+          }
           var css = "z-index:0;pointer-events:auto;";
           c.style.cssText = css;
         });
@@ -249,6 +265,7 @@ export default {
     dragEnter: function(e, card, deck) {
       this.highlightedCard = card;
       this.highlightedDeck = deck;
+      console.log(this.highlightedDeck, this.highlightedCard);
     },
     gameOver: function() {
       console.log("GameOver");
