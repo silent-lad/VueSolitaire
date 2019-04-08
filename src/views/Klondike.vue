@@ -136,7 +136,7 @@ export default {
       selectedArray: [],
       completedHands: 0,
       flip,
-      dealtCards: [{ rank: "", suit: "", deck: "" }],
+      dealtCards: [],
       shuffle2,
       highlightedDeck: "",
       highlightedCard: ""
