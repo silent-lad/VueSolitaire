@@ -2,33 +2,29 @@
   <div class="page_wrapper">
     <div class="heading">
       <a href="http://github.com/silent-lad/VueSolitaire"
-        ><img src="../assets/sl.png" alt="silentlad" class="logo"
+        ><img src="https://i.ibb.co/KhFKFRM/sl.png" alt="silentlad" class="logo"
       /></a>
-
       <h1>
         VueSolitaire
       </h1>
     </div>
-
     <div class="menu_wrapper">
       <router-link to="/klondike">
         <div class="option">
-          <img src="../assets/images/3.png" alt="" srcset="" />
+          <img src="https://i.ibb.co/6YNfd7G/3.png" alt="" srcset="" />
 
           <p>Klondike Solitaire</p>
         </div>
       </router-link>
-
       <router-link to="/spider/1">
         <div class="option larger">
-          <img src="../assets/images/1.png" alt="" srcset="" />
+          <img src="https://i.ibb.co/jZDYNVY/1.png" alt="" srcset="" />
           <p>Spider Solitaire</p>
         </div>
       </router-link>
-
       <router-link to="/spider/2">
         <div class="option">
-          <img src="../assets/images/5.png" alt="" srcset="" />
+          <img src="https://i.ibb.co/Ch2SqkN/5.png" alt="" srcset="" />
           <p>Spider Solitaire [4 Suit]</p>
         </div>
       </router-link>

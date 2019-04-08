@@ -42,7 +42,7 @@ ul {
   padding: 0;
 }
 .card.down {
-  background: url("../assets/sl.png") rgb(255, 255, 255);
+  background: url("https://i.ibb.co/KhFKFRM/sl.png") rgb(255, 255, 255);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 80%;
