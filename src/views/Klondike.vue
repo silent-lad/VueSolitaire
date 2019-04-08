@@ -73,7 +73,7 @@
           id="1"
           @dragenter="
             if (deck.length == 0) {
-              dragEnter($event, '', deck);
+              dragEnter($event, 'empty', deck);
             }
           "
         >
@@ -90,7 +90,11 @@
               @dragstart="dragInit($event, card, deck)"
               @drag="dragCards($event, card)"
               @dragend="drop($event, card)"
-              @dragenter="dragEnter($event, card, deck)"
+              @dragenter="
+                if (card.isDown == false) {
+                  dragEnter($event, card, deck);
+                }
+              "
             >
               <Card
                 :card="card"
@@ -212,7 +216,7 @@ export default {
           return;
         }
       }
-      if (this.highlightedCard == "") {
+      if (this.highlightedCard == "empty") {
         if (card.rank == "K") {
           if (isMovable(this.selectedCard, this.selectedDeck)) {
             this.moveCards(

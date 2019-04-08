@@ -28,7 +28,11 @@
             @dragstart="dragInit($event, card, deck)"
             @drag="dragCards($event, card)"
             @dragend="drop($event, card)"
-            @dragenter="dragEnter($event, card, deck)"
+            @dragenter="
+              if (card.isDown == false) {
+                dragEnter($event, card, deck);
+              }
+            "
           >
             <Card
               :card="card"
