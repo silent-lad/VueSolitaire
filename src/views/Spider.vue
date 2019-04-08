@@ -7,7 +7,9 @@
       </h1>
     </div>
     <div class="green_table">
-      <!-- <button @click="displayInit();"></button> -->
+      <button class="goback" @click="$router.push('/')">
+        <i class="fas fa-long-arrow-alt-left"></i> Menu
+      </button>
       <div
         class="card card_holder"
         v-for="deck in decks.slice(0, 10)"
@@ -186,6 +188,11 @@ export default {
     },
     gameOver: function() {
       console.log("GameOver");
+      if (confirm("Congrats,You Won the Game.Do you want to continue?")) {
+        this.spiderInit();
+      } else {
+        this.$router.push("/");
+      }
     },
     handComplete: function() {
       console.log("complete");
@@ -321,7 +328,6 @@ body {
   height: 100vh;
   width: 100vw;
   padding: 0;
-  /* background: green; */
   background-image: radial-gradient(
     rgba(57, 172, 57, 0.726),
     rgb(0, 116, 0),
@@ -379,6 +385,17 @@ body {
   .green_table {
     display: none;
   }
+}
+.goback {
+  cursor: pointer;
+  position: absolute;
+  text-shadow: 3px 2px 4px rgba(0, 0, 0, 0.548);
+  top: 1vh;
+  left: 2vw;
+  border: none;
+  background: none;
+  font-family: "Pacifico", cursive;
+  font-size: 2vw;
 }
 /* @media screen and (orientation:landscape) { … } */
 </style>

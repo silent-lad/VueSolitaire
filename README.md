@@ -36,18 +36,18 @@ Solitaire implemented by scratch on vue.js. It contains 3 types of solitaire nam
 
 **This project is inspired by [AadumKhor](https://github.com/AadumKhor) Go check out his flutter implementation of the same [Here](https://github.com/AadumKhor/Solitaire_Flutter)** .
 
-
 ## How to play
 
-### Drag and Drop [**New** ]:-
+### Drag and Drop [__Chrome,Opera__]:-
 
 - **Drag** the card or the card pile you want to move.
 - **Drop** the dragged card pile on the target and if the move is legal card will move
+- Note:- Drag and Drop doesn't work for properly for **firefox** due to their lack of support to html Drag and drop API - https://bugzilla.mozilla.org/show_bug.cgi?id=505521 .
 
-### Click edition (Mobile version)-
+### Click edition [__Mobile,Firefox,Chrome,Safari,Opera__]-
 
 - **Click** on the card or card pile you want to move .The pile turns to **blue**.
-- Click on the
+- **Click** on the
   destination card and if the move is legal the cards will
   stack below the target.
 
@@ -96,7 +96,6 @@ npm run serve
 ## Future scope
 
 - Add winning animation.
-- Make klondike one better.
 
 ## Support on Beerpay
 

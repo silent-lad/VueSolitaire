@@ -7,6 +7,9 @@
       </h1>
     </div>
     <div class="main_table">
+      <button class="goback" @click="$router.push('/')">
+        <i class="fas fa-long-arrow-alt-left"></i> Menu
+      </button>
       <div class="upper_table">
         <div
           style="position:absolute;top:-10px;left:6%;"
@@ -302,13 +305,10 @@ export default {
       this.highlightedDeck = deck;
     },
     gameOver: function() {
-      console.log("GameOver");
-    },
-    handComplete: function() {
-      console.log("complete");
-      this.completedHands++;
-      if (this.completedHands == 8) {
-        this.gameOver();
+      if (confirm("Congrats,You Won the Game.Do you want to continue?")) {
+        this.spiderInit();
+      } else {
+        this.$router.push("/");
       }
     },
     removeSelection: function() {
