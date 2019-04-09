@@ -218,18 +218,20 @@ export default {
       }
     },
     dealCards: function() {
-      this.playSound(true);
-      this.decks.forEach(deck => {
-        if (this.decks[10].length > 0) {
-          var newCard = this.decks[10].pop();
-          newCard.isDown = false;
-          deck.push(newCard);
-        }
-      });
-      this.decks.forEach(deck => {
-        this.isCompleteHand(deck);
-      });
-      this.$forceUpdate();
+      if (this.decks[10].length != 0) {
+        this.playSound(true);
+        this.decks.forEach(deck => {
+          if (this.decks[10].length > 0) {
+            var newCard = this.decks[10].pop();
+            newCard.isDown = false;
+            deck.push(newCard);
+          }
+        });
+        this.decks.forEach(deck => {
+          this.isCompleteHand(deck);
+        });
+        this.$forceUpdate();
+      }
     },
     isCompleteHand: function(deck) {
       var pileChecker = this.checkPile(deck);
