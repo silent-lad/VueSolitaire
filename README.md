@@ -23,7 +23,7 @@
 
 <h2 align="center"><a  href="https://solitairevue.firebaseapp.com">Live Demo</a></h2>
 
-### [Contributions are Welcome](https://github.com/silent-lad/VueSolitaire/edit/master/CONTRIBUTING.md)
+### [Contributions are Welcome](https://github.com/silent-lad/VueSolitaire/blob/master/CONTRIBUTING.md)
 
 ## Description
 
