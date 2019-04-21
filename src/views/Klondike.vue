@@ -124,8 +124,8 @@ import {
   isMovable
 } from "../assets/js/klondikeSolitaire.js";
 import { moveCards } from "../assets/js/spiderSolitaire.js";
-import flip from "../assets/audio/flip.wav";
-import shuffle2 from "../assets/audio/shuffle2.wav";
+import flip from "../assets/audio/flip2.wav";
+import shuffle2 from "../assets/audio/shuffle3.wav";
 
 export default {
   name: "Klondike",
@@ -249,7 +249,6 @@ export default {
           }
         }
       }
-
       if (isDroppable(this.highlightedCard, this.selectedCard)) {
         if (isMovable(this.selectedCard, this.selectedDeck)) {
           this.selectedArray.forEach(card => {
@@ -265,7 +264,6 @@ export default {
             } else {
               var css = "z-index:0;pointer-events:auto;display:none;";
             }
-
             c.style.cssText = css;
           });
           this.moveCards(
