@@ -124,8 +124,8 @@ import {
   isMovable
 } from "../assets/js/klondikeSolitaire.js";
 import { moveCards } from "../assets/js/spiderSolitaire.js";
-import flip from "../assets/audio/flip2.wav";
-import shuffle2 from "../assets/audio/shuffle3.wav";
+import flipSound from "../assets/audio/flip2.wav";
+import shuffleSound from "../assets/audio/shuffle3.wav";
 
 export default {
   name: "Klondike",
@@ -142,9 +142,9 @@ export default {
       selectedDeck: "",
       selectedArray: [],
       completedHands: 0,
-      flip,
+      flipSound,
       dealtCards: [],
-      shuffle2,
+      shuffleSound,
       highlightedDeck: "",
       highlightedCard: ""
     };
@@ -417,7 +417,7 @@ export default {
     },
     playSound(shuffle) {
       if (shuffle) {
-        var audio = new Audio(shuffle2);
+        var audio = new Audio(this.shuffleSound);
         audio
           .play()
           .then(_ => {
@@ -427,7 +427,7 @@ export default {
             console.log(error.message);
           });
       } else {
-        var audio = new Audio(flip);
+        var audio = new Audio(this.flipSound);
         audio.play();
       }
     }

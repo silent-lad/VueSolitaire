@@ -67,8 +67,8 @@ import {
 } from "../assets/js/spiderSolitaire.js";
 import { normalInit } from "../assets/js/normalSolitaire.js";
 import { setTimeout } from "timers";
-import flip2 from "../assets/audio/flip2.wav";
-import shuffle3 from "../assets/audio/shuffle3.wav";
+import flipSound from "../assets/audio/flip2.wav";
+import shuffleSound from "../assets/audio/shuffle3.wav";
 
 export default {
   name: "Spider",
@@ -84,8 +84,8 @@ export default {
       selectedDeck: "",
       selectedArray: [],
       completedHands: 0,
-      flip2,
-      shuffle3,
+      flipSound,
+      shuffleSound,
       origin
     };
   },
@@ -292,7 +292,7 @@ export default {
     },
     playSound(shuffle) {
       if (shuffle) {
-        var audio = new Audio(shuffle3);
+        var audio = new Audio(this.shuffleSound);
         audio
           .play()
           .then(_ => {
@@ -302,7 +302,7 @@ export default {
             console.log(error.message);
           });
       } else {
-        var audio = new Audio(flip2);
+        var audio = new Audio(this.flipSound);
         audio.play();
       }
     }
