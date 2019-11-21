@@ -176,12 +176,16 @@ export default {
         }
         var x = e.pageX - this.origin.x;
         var y = e.pageY - this.origin.y;
-        var css =
-          "z-index:9999;pointer-events: none; transform: scale(1.05, 1.05) rotateX(0deg) translate3d(" +
-          x +
-          "px, " +
-          y +
-          "px, 0px);";
+        if (e.pageX == 0) {
+          var css = "z-index:9999;transform:translate3d(0px,0px, 0px);";
+        } else {
+          var css =
+            "z-index:9999;pointer-events: none; transform: scale(1.05, 1.05) rotate(0deg) translate3d(" +
+            x +
+            "px, " +
+            y +
+            "px, 0px);";
+        }
         c.style.cssText = css;
       });
     },
