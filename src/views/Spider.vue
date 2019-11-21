@@ -114,14 +114,14 @@ export default {
         var x = e.pageX - this.origin.x;
         var y = e.pageY - this.origin.y;
         if (e.pageX == 0) {
-          var css = "z-index:9999;transform:translate3d(0px,0px, 0px);";
+          var css = "z-index:9999;transform:translate(0px,0px);display:none;";
         } else {
           var css =
-            "z-index:9999;pointer-events: none; transform: scale(1.05, 1.05) rotate(0deg) translate3d(" +
+            "z-index:9999;pointer-events: none; transform: scale(1.05, 1.05) rotate(0deg) translate(" +
             x +
             "px, " +
             y +
-            "px, 0px);";
+            "px);";
         }
         c.style.cssText = css;
       });
@@ -367,9 +367,9 @@ body {
 }
 .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
   opacity: 0;
-  /* transform: translateY(30px); */
+  /* transform: translateY); */
 }
-@media screen and (max-width: 780px) {
+@media screen and (max-width: ) {
   body {
     width: 100%;
     height: 100%;
